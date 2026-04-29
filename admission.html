@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admission 2026 | Child Care High School</title>
+    <title>Admission Form | Child Care High School</title>
     
     <!-- Tailwind CSS & Font Awesome -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -33,20 +33,30 @@
         }
 
         label { @apply text-[11px] font-black uppercase tracking-widest text-slate-400 ml-2 mb-1 block; }
+        
+        .form-card {
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
+        }
     </style>
 </head>
 <body class="text-slate-900 overflow-x-hidden" lang="en" id="mainBody">
 
-    <!-- HEADER -->
+    <!-- HEADER / NAVIGATION -->
     <header class="fixed w-full top-0 z-[100] shadow-lg">
         <nav class="glass-nav border-b border-slate-200">
             <div class="container mx-auto px-4 lg:px-8 py-3 flex justify-between items-center">
                 <a href="index.html" class="flex items-center space-x-2">
-                    <div class="bg-blue-800 text-white p-2 rounded-xl"><i class="fas fa-graduation-cap text-xl"></i></div>
-                    <h1 class="text-sm lg:text-xl font-black text-blue-900 uppercase">CHILD CARE <span class="text-red-600 font-black">HIGH SCHOOL</span></h1>
+                    <div class="bg-blue-800 text-white p-2 rounded-xl shadow-md">
+                        <i class="fas fa-graduation-cap text-xl lg:text-2xl"></i>
+                    </div>
+                    <h1 class="text-sm lg:text-xl font-black text-blue-900 uppercase">
+                        CHILD CARE <span class="text-red-600 font-black">HIGH SCHOOL</span>
+                    </h1>
                 </a>
                 <div class="flex items-center space-x-4">
-                    <button onclick="toggleLanguage()" class="bg-slate-200 px-3 py-1 rounded-full font-black text-[10px] border border-white"><span id="btnText">BN</span></button>
+                    <button onclick="toggleLanguage()" class="bg-slate-200 hover:bg-slate-300 text-slate-800 px-3 py-1 rounded-full font-black text-[10px] border border-white">
+                        <span id="btnText">BN</span>
+                    </button>
                     <a href="index.html" class="font-bold text-blue-800 text-xs underline uppercase tracking-widest">Home</a>
                 </div>
             </div>
@@ -54,56 +64,36 @@
     </header>
 
     <main class="pt-20">
-        <!-- HERO SECTION -->
+        <!-- BANNER SECTION -->
         <section class="admission-hero py-16 lg:py-24 text-white text-center px-6">
             <div class="max-w-3xl mx-auto">
-                <span class="bg-red-600 px-4 py-1 rounded-full text-[10px] font-black uppercase tracking-[3px] mb-4 inline-block italic">Join the Excellence</span>
+                <span class="bg-red-600 px-4 py-1 rounded-full text-[10px] font-black uppercase tracking-[3px] mb-4 inline-block italic border border-red-400">Admission Open 2026-27</span>
                 <h1 class="text-4xl lg:text-6xl font-black uppercase tracking-tighter mb-4">
-                    <span class="lang-en">Admission 2026-27</span><span class="lang-bn">ভর্তি চলছে ২০২৬-২৭</span>
+                    <span class="lang-en">Admission Form</span><span class="lang-bn">ভর্তি আবেদন ফরম</span>
                 </h1>
                 <p class="text-blue-100 font-medium italic">
-                    <span class="lang-en">"Take the first step towards a bright and successful future."</span>
-                    <span class="lang-bn">"উজ্জ্বল এবং সফল ভবিষ্যতের দিকে প্রথম পদক্ষেপ নিন।"</span>
+                    <span class="lang-en">"Begin your journey of academic excellence with us."</span>
+                    <span class="lang-bn">"আমাদের সাথে একাডেমিক শ্রেষ্ঠত্বের পথে আপনার যাত্রা শুরু করুন।"</span>
                 </p>
             </div>
         </section>
 
-        <!-- ADMISSION FORM CONTAINER -->
-        <section class="container mx-auto px-4 lg:px-20 -mt-16 mb-24">
-            <div class="bg-white rounded-[40px] shadow-2xl overflow-hidden flex flex-col lg:flex-row">
-                
-                <!-- Info Sidebar (Left) -->
-                <div class="lg:w-1/3 bg-slate-900 text-white p-10 lg:p-12 space-y-10">
-                    <div>
-                        <h3 class="text-2xl font-black uppercase italic border-b-4 border-red-600 inline-block mb-6">Requirements</h3>
-                        <ul class="space-y-4 text-slate-300 font-medium">
-                            <li class="flex items-start"><i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i> <span>Recent Passport Size Photo (4 Copies)</span></li>
-                            <li class="flex items-start"><i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i> <span>Copy of Birth Certificate</span></li>
-                            <li class="flex items-start"><i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i> <span>Previous School TC (If applicable)</span></li>
-                            <li class="flex items-start"><i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i> <span>Parent's NID Copy</span></li>
-                        </ul>
-                    </div>
-                    
-                    <div class="bg-white/5 p-6 rounded-3xl border border-white/10">
-                        <p class="text-[10px] font-black text-red-500 uppercase tracking-widest mb-2">Help Desk</p>
-                        <h4 class="text-xl font-bold italic">+880 1823-371159</h4>
-                        <p class="text-xs text-slate-500 mt-1">Available: 8:00 AM - 4:00 PM</p>
-                    </div>
-                </div>
-
-                <!-- Main Form (Right) -->
-                <div class="lg:w-2/3 p-8 lg:p-16">
-                    <div class="mb-10">
-                        <h2 class="text-3xl font-black text-slate-800 uppercase tracking-tight italic">Online Application</h2>
-                        <p class="text-slate-400 font-bold text-xs uppercase mt-1">Please fill out all the information carefully</p>
+        <!-- 1. ONLINE APPLICATION FORM (UPPER PART) -->
+        <section class="container mx-auto px-4 lg:px-20 -mt-16 mb-16">
+            <div class="bg-white rounded-[40px] form-card overflow-hidden">
+                <div class="p-8 lg:p-16">
+                    <div class="mb-10 text-center lg:text-left">
+                        <h2 class="text-3xl font-black text-slate-800 uppercase tracking-tight italic">
+                            <span class="lang-en">Online Application</span><span class="lang-bn">অনলাইন আবেদন</span>
+                        </h2>
+                        <div class="h-1.5 w-20 bg-red-600 mt-2 rounded-full mx-auto lg:mx-0"></div>
                     </div>
 
                     <form id="admissionForm" class="space-y-8">
-                        <!-- Student Section -->
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
                                 <label><span class="lang-en">Student Full Name</span><span class="lang-bn">শিক্ষার্থীর পূর্ণ নাম</span></label>
-                                <input type="text" placeholder="e.g. Ariful Islam">
+                                <input type="text" placeholder="Full Name">
                             </div>
                             <div>
                                 <label><span class="lang-en">Gender</span><span class="lang-bn">লিঙ্গ</span></label>
@@ -119,8 +109,9 @@
                                 <input type="date">
                             </div>
                             <div>
-                                <label><span class="lang-en">Apply For Class</span><span class="lang-bn">যে শ্রেণিতে ভর্তি হতে ইচ্ছুক</span></label>
+                                <label><span class="lang-en">Apply For Class</span><span class="lang-bn">শ্রেণি</span></label>
                                 <select id="targetClass" onchange="checkGroup()">
+                                    <option value="">Select Class...</option>
                                     <option>Play</option><option>Nursery</option><option>One</option>
                                     <option>Two</option><option>Three</option><option>Four</option>
                                     <option>Five</option><option>Six</option><option>Seven</option>
@@ -129,17 +120,16 @@
                             </div>
                         </div>
 
-                        <!-- Group Section (Hidden for small classes) -->
-                        <div id="groupDiv" class="hidden animate-fade-in">
-                            <label><span class="lang-en">Select Group (For 9-10)</span><span class="lang-bn">বিভাগ নির্বাচন করুন</span></label>
-                            <select>
+                        <!-- Class 9-10 Group Selection -->
+                        <div id="groupDiv" class="hidden animate-fade-in bg-blue-50 p-6 rounded-3xl border border-blue-100">
+                            <label class="text-blue-900"><span class="lang-en">Select Group (Science/Arts/Commerce)</span><span class="lang-bn">বিভাগ নির্বাচন করুন</span></label>
+                            <select class="bg-white">
                                 <option>Science (বিজ্ঞান)</option>
                                 <option>Commerce (ব্যবসায় শিক্ষা)</option>
                                 <option>Arts (মানবিক)</option>
                             </select>
                         </div>
 
-                        <!-- Guardian Section -->
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
                                 <label><span class="lang-en">Guardian Name</span><span class="lang-bn">অভিভাবকের নাম</span></label>
@@ -147,19 +137,62 @@
                             </div>
                             <div>
                                 <label><span class="lang-en">Mobile Number</span><span class="lang-bn">মোবাইল নম্বর</span></label>
-                                <input type="tel" placeholder="01700-000000">
+                                <input type="tel" placeholder="01XXX-XXXXXX">
                             </div>
                         </div>
 
                         <div>
-                            <label><span class="lang-en">Full Address</span><span class="lang-bn">বর্তমান ঠিকানা</span></label>
-                            <textarea rows="3" placeholder="Street, Village, Post Code..."></textarea>
+                            <label><span class="lang-en">Full Address</span><span class="lang-bn">পূর্ণ ঠিকানা</span></label>
+                            <textarea rows="3" placeholder="Village, Post, Thana, District..."></textarea>
                         </div>
 
-                        <button type="button" onclick="submitForm()" class="w-full bg-red-600 text-white py-5 rounded-3xl font-black text-xl shadow-2xl shadow-red-200 hover:bg-slate-900 transition-all transform active:scale-95 uppercase tracking-widest italic">
+                        <button type="button" onclick="submitForm()" class="w-full bg-blue-800 text-white py-5 rounded-3xl font-black text-xl shadow-2xl shadow-blue-200 hover:bg-black transition-all transform active:scale-95 uppercase tracking-widest italic">
                             <span class="lang-en">Submit Application</span><span class="lang-bn">আবেদন জমা দিন</span>
                         </button>
                     </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. REQUIREMENTS & INFO (LOWER PART) -->
+        <section class="container mx-auto px-4 lg:px-20 mb-24">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Requirements Card -->
+                <div class="lg:col-span-2 bg-slate-900 text-white p-10 lg:p-12 rounded-[40px] shadow-2xl">
+                    <h3 class="text-2xl font-black uppercase italic border-b-4 border-red-600 inline-block mb-8">
+                        <span class="lang-en">Admission Requirements</span><span class="lang-bn">ভর্তির জন্য যা যা প্রয়োজন</span>
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 font-medium text-slate-300">
+                        <div class="flex items-center p-4 bg-white/5 rounded-2xl border border-white/10 transition hover:bg-white/10">
+                            <i class="fas fa-camera text-red-500 text-2xl mr-4"></i>
+                            <span>4 Copies passport size photo</span>
+                        </div>
+                        <div class="flex items-center p-4 bg-white/5 rounded-2xl border border-white/10 transition hover:bg-white/10">
+                            <i class="fas fa-file-alt text-red-500 text-2xl mr-4"></i>
+                            <span>Original TC (Previous School)</span>
+                        </div>
+                        <div class="flex items-center p-4 bg-white/5 rounded-2xl border border-white/10 transition hover:bg-white/10">
+                            <i class="fas fa-id-card text-red-500 text-2xl mr-4"></i>
+                            <span>Birth Certificate Copy</span>
+                        </div>
+                        <div class="flex items-center p-4 bg-white/5 rounded-2xl border border-white/10 transition hover:bg-white/10">
+                            <i class="fas fa-user-friends text-red-500 text-2xl mr-4"></i>
+                            <span>Parent's NID Copy</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Help Desk Card -->
+                <div class="bg-white p-10 rounded-[40px] shadow-xl border-2 border-slate-100 flex flex-col justify-center text-center">
+                    <div class="w-16 h-16 bg-blue-100 text-blue-800 rounded-2xl flex items-center justify-center text-2xl mx-auto mb-4">
+                        <i class="fas fa-phone-alt"></i>
+                    </div>
+                    <h4 class="text-xl font-black uppercase tracking-tight text-slate-800 mb-2 italic">Admission Help</h4>
+                    <p class="text-slate-400 font-bold text-xs mb-6 uppercase">For any queries call us</p>
+                    <a href="tel:+8801823371159" class="text-2xl font-black text-blue-900 hover:text-red-600 transition tracking-tighter">
+                        +880 1823-371159
+                    </a>
+                    <p class="text-[10px] font-bold text-slate-400 mt-2 uppercase italic tracking-widest">Office Time: 8am - 4pm</p>
                 </div>
             </div>
         </section>
@@ -208,7 +241,7 @@
         }
 
         function submitForm() {
-            alert("Success! Your admission request has been sent to the school board.");
+            alert("Your admission application has been submitted successfully!");
             window.location.href = "index.html";
         }
     </script>
