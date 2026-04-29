@@ -1,303 +1,139 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Child Care High School | excellence in Education</title>
-    
-    <!-- Meta Tags for SEO -->
-    <meta name="description" content="Welcome to Child Care High School. We provide quality education with modern labs and expert teachers since 2002.">
-    
-    <!-- Tailwind CSS & Font Awesome -->
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home | Child Care High School 2026</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;900&display=swap" rel="stylesheet">
-
     <style>
-        body { font-family: 'Poppins', sans-serif; }
-        
-        /* ডুয়াল ল্যাঙ্গুয়েজ সিস্টেম CSS */
         body[lang="bn"] .lang-en { display: none !important; }
         body[lang="bn"] .lang-bn { display: block !important; }
         body[lang="en"] .lang-bn { display: none !important; }
         body[lang="en"] .lang-en { display: block !important; }
-
-        /* স্লাইডার অ্যানিমেশন */
         .slide { display: none; }
         .active-slide { display: block; animation: zoomFade 1.2s ease-in-out; }
-        @keyframes zoomFade {
-            0% { opacity: 0.5; transform: scale(1.1); }
-            100% { opacity: 1; transform: scale(1); }
-        }
-
-        .glass-nav {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-        }
-
-        .gradient-text {
-            background: linear-gradient(to right, #1e40af, #dc2626);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        /* মোবাইল মেনুর জন্য স্পেশাল স্ক্রল */
-        #mobileMenu {
-            max-height: calc(100vh - 80px);
-            overflow-y: auto;
-        }
+        @keyframes zoomFade { 0% { opacity: 0.5; transform: scale(1.1); } 100% { opacity: 1; transform: scale(1); } }
+        .glass-nav { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(15px); }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-900 overflow-x-hidden" lang="en" id="mainBody">
+<body class="bg-slate-50 font-sans overflow-x-hidden" lang="en" id="mainBody">
 
-    <!-- HEADER / NAVIGATION -->
-    <header class="fixed w-full top-0 z-[100] transition-all duration-300 shadow-lg">
+    <header class="fixed w-full top-0 z-[100] shadow-lg">
         <nav class="glass-nav border-b border-slate-200">
             <div class="container mx-auto px-4 lg:px-8 py-3 flex justify-between items-center">
-                
-                <!-- School Logo/Full Name -->
-                <a href="index.html" class="flex items-center space-x-2 group">
-                    <div class="bg-blue-800 text-white p-2 rounded-xl shadow-md">
-                        <i class="fas fa-graduation-cap text-xl lg:text-2xl"></i>
-                    </div>
-                    <div class="leading-none">
-                        <h1 class="text-sm lg:text-2xl font-black tracking-tighter text-blue-900 uppercase">
-                            CHILD CARE <span class="text-red-600">HIGH SCHOOL</span>
-                        </h1>
-                        <p class="text-[7px] lg:text-[9px] font-bold text-slate-400 tracking-[2px] lg:tracking-[4px] uppercase mt-0.5 text-center lg:text-left">Nurturing bright minds</p>
-                    </div>
+                <a href="index.html" class="flex items-center space-x-2">
+                    <div class="bg-blue-800 text-white p-2 rounded-xl shadow-md"><i class="fas fa-graduation-cap text-xl lg:text-2xl"></i></div>
+                    <h1 class="text-sm lg:text-2xl font-black text-blue-900 uppercase leading-none">CHILD CARE <br class="lg:hidden"> <span class="text-red-600 font-black">HIGH SCHOOL</span></h1>
                 </a>
-
-                <!-- Desktop Menu (বড় স্ক্রিনে সব বাটন) -->
-                <ul class="hidden lg:flex space-x-4 xl:space-x-6 font-bold text-slate-600 text-[10px] xl:text-xs uppercase tracking-wider">
-                    <li><a href="index.html" class="text-blue-700 border-b-2 border-blue-700 pb-1"><span class="lang-en">Home</span><span class="lang-bn">হোম</span></a></li>
-                    <li><a href="about.html" class="hover:text-blue-700 transition"><span class="lang-en">About Us</span><span class="lang-bn">সম্পর্কে</span></a></li>
-                    <li><a href="academics.html" class="hover:text-blue-700 transition"><span class="lang-en">Academics</span><span class="lang-bn">একাডেমিক</span></a></li>
-                    <li><a href="notice.html" class="hover:text-blue-700 transition"><span class="lang-en">Notice</span><span class="lang-bn">নোটিশ</span></a></li>
-                    <li><a href="diary.html" class="hover:text-blue-700 transition"><span class="lang-en">Diary</span><span class="lang-bn">ডায়েরি</span></a></li>
-                    <li><a href="result.html" class="hover:text-blue-700 transition"><span class="lang-en">Result</span><span class="lang-bn">ফলাফল</span></a></li>
-                    <li><a href="admission.html" class="hover:text-red-600 transition text-red-600 italic"><span class="lang-en">Admission</span><span class="lang-bn">ভর্তি</span></a></li>
-                    <li><a href="contact.html" class="hover:text-blue-700 transition"><span class="lang-en">Contact</span><span class="lang-bn">যোগাযোগ</span></a></li>
+                <ul class="hidden lg:flex space-x-4 font-bold text-slate-600 text-[10px] uppercase">
+                    <li><a href="index.html" class="text-blue-700">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="academics.html">Academics</a></li>
+                    <li><a href="notice.html" class="text-orange-600 italic">Notice</a></li>
+                    <li><a href="diary.html" class="text-green-600">Diary</a></li>
+                    <li><a href="result.html">Result</a></li>
+                    <li><a href="admission.html" class="text-red-600">Admission</a></li>
+                    <li><a href="contact.html">Contact</a></li>
                 </ul>
-
-                <!-- Action Buttons -->
-                <div class="flex items-center space-x-2">
-                    <button onclick="toggleLanguage()" class="bg-slate-200 hover:bg-slate-300 text-slate-800 px-2 lg:px-3 py-1 rounded-full font-black text-[9px] lg:text-[10px] transition border border-white">
-                        <span id="btnText">BN</span>
-                    </button>
-                    <a href="login.html" class="hidden md:block bg-blue-800 text-white px-5 py-2 rounded-full font-bold shadow-md hover:bg-black transition text-[10px] uppercase">
-                        <span class="lang-en">LOGIN</span><span class="lang-bn">লগইন</span>
-                    </a>
-                    <!-- Mobile Menu Button -->
-                    <button onclick="toggleMobileMenu()" class="lg:hidden text-2xl text-blue-900 p-1 focus:outline-none">
-                        <i id="menuIcon" class="fas fa-bars"></i>
-                    </button>
+                <div class="flex items-center gap-2">
+                    <button onclick="toggleLanguage()" class="bg-slate-200 px-3 py-1 rounded-full font-black text-[10px] border border-white"><span id="btnText">BN</span></button>
+                    <a href="login.html" class="hidden md:block bg-blue-800 text-white px-5 py-2 rounded-full font-bold text-[10px]">LOGIN</a>
+                    <button onclick="document.getElementById('mobileMenu').classList.toggle('hidden')" class="lg:hidden text-2xl text-blue-900 focus:outline-none"><i class="fas fa-bars"></i></button>
                 </div>
             </div>
-
-            <!-- MOBILE MENU (FIXED & SCROLLABLE) -->
-            <div id="mobileMenu" class="hidden lg:hidden bg-white absolute w-full left-0 shadow-2xl border-t border-slate-100 z-50">
-                <div class="flex flex-col p-4 space-y-1 font-bold text-slate-700">
-                    <a href="index.html" class="p-3 hover:bg-blue-50 rounded-xl border-b border-slate-50 flex items-center">
-                        <i class="fas fa-home w-8 text-blue-600"></i> <span class="lang-en">Home</span><span class="lang-bn">হোম</span>
-                    </a>
-                    <a href="about.html" class="p-3 hover:bg-blue-50 rounded-xl border-b border-slate-50 flex items-center">
-                        <i class="fas fa-info-circle w-8 text-blue-600"></i> <span class="lang-en">About Us</span><span class="lang-bn">আমাদের সম্পর্কে</span>
-                    </a>
-                    <a href="academics.html" class="p-3 hover:bg-blue-50 rounded-xl border-b border-slate-50 flex items-center">
-                        <i class="fas fa-book w-8 text-blue-600"></i> <span class="lang-en">Academics</span><span class="lang-bn">একাডেমিক</span>
-                    </a>
-                    <a href="notice.html" class="p-3 hover:bg-blue-50 rounded-xl border-b border-slate-50 flex items-center text-orange-600">
-                        <i class="fas fa-bullhorn w-8"></i> <span class="lang-en">Notice Board</span><span class="lang-bn">নোটিশ বোর্ড</span>
-                    </a>
-                    <a href="diary.html" class="p-3 hover:bg-blue-50 rounded-xl border-b border-slate-50 flex items-center text-green-600">
-                        <i class="fas fa-edit w-8"></i> <span class="lang-en">Class Diary</span><span class="lang-bn">ডায়েরি</span>
-                    </a>
-                    <a href="result.html" class="p-3 hover:bg-blue-50 rounded-xl border-b border-slate-50 flex items-center">
-                        <i class="fas fa-poll w-8 text-blue-600"></i> <span class="lang-en">Results</span><span class="lang-bn">ফলাফল</span>
-                    </a>
-                    <a href="admission.html" class="p-3 hover:bg-blue-50 rounded-xl border-b border-slate-50 flex items-center text-red-600">
-                        <i class="fas fa-user-plus w-8"></i> <span class="lang-en">Admission</span><span class="lang-bn">ভর্তি ফরম</span>
-                    </a>
-                    <a href="contact.html" class="p-3 hover:bg-blue-50 rounded-xl border-b border-slate-50 flex items-center">
-                        <i class="fas fa-phone w-8 text-blue-600"></i> <span class="lang-en">Contact</span><span class="lang-bn">যোগাযোগ</span>
-                    </a>
-                    <a href="login.html" class="mt-4 p-4 bg-blue-900 text-white text-center rounded-2xl shadow-lg block uppercase tracking-widest">
-                        <span class="lang-en">Student Login</span><span class="lang-bn">লগইন করুন</span>
-                    </a>
-                </div>
+            <!-- Mobile Menu -->
+            <div id="mobileMenu" class="hidden lg:hidden bg-white absolute w-full left-0 p-6 space-y-4 shadow-2xl border-t font-bold text-sm">
+                <a href="index.html" class="block border-b pb-2">Home</a>
+                <a href="notice.html" class="block border-b pb-2">Notice Board</a>
+                <a href="diary.html" class="block border-b pb-2 text-green-600">Class Diary</a>
+                <a href="result.html" class="block border-b pb-2">Results</a>
+                <a href="admission.html" class="block border-b pb-2 text-red-600">Admission</a>
+                <a href="login.html" class="block bg-blue-900 text-white text-center py-3 rounded-xl uppercase">Student Login</a>
             </div>
         </nav>
     </header>
 
-    <!-- MAIN CONTENT -->
     <main class="pt-20">
-        <!-- HERO SECTION -->
-        <section class="flex flex-col lg:flex-row min-h-screen lg:h-[90vh] items-stretch overflow-hidden">
-            <div class="lg:w-1/2 bg-white flex items-center px-6 lg:px-20 py-16 relative">
-                <div class="max-w-xl z-10">
-                    <span class="bg-red-100 text-red-600 px-4 py-1 rounded-full text-[10px] font-black uppercase tracking-widest mb-6 inline-block italic border border-red-200">Session 2026-27 Admission Open</span>
-                    
-                    <h1 class="text-4xl lg:text-7xl font-black leading-tight uppercase mb-6 tracking-tighter">
-                        <span class="lang-en">Excellence <br> <span class="gradient-text">Starts Here.</span></span>
-                        <span class="lang-bn">আগামীর দক্ষ <br> <span class="gradient-text">প্রজন্ম গড়ছি</span></span>
-                    </h1>
-                    
-                    <p class="text-lg text-slate-500 mb-10 leading-relaxed font-medium italic">
-                        <span class="lang-en">"Empowering students with knowledge, moral values, and modern digital education since 2002."</span>
-                        <span class="lang-bn">"২০০২ সাল থেকে নৈতিকতা ও আধুনিক ডিজিটাল শিক্ষার সমন্বয়ে শিক্ষার্থীদের ক্ষমতায়ন করছি।"</span>
-                    </p>
-
-                    <div class="flex flex-col sm:flex-row gap-4">
-                        <a href="admission.html" class="bg-blue-800 text-white text-center px-10 py-4 rounded-2xl font-black text-lg shadow-2xl hover:bg-black transition transform active:scale-95 uppercase">
-                            <span class="lang-en">Apply Now</span><span class="lang-bn">ভর্তি হও এখনই</span>
-                        </a>
-                        <a href="diary.html" class="bg-white border-2 border-slate-200 text-center px-10 py-4 rounded-2xl font-black text-lg hover:bg-slate-50 transition transform active:scale-95 uppercase">
-                            <span class="lang-en">View Diary</span><span class="lang-bn">ডায়েরি দেখুন</span>
-                        </a>
+        <section class="flex flex-col lg:flex-row min-h-screen lg:h-[85vh] items-stretch overflow-hidden">
+            <div class="lg:w-1/2 bg-white flex items-center px-6 lg:px-16 py-16">
+                <div class="max-w-xl animate-fade-in">
+                    <h1 class="text-4xl lg:text-7xl font-black leading-tight mb-6 tracking-tighter uppercase"><span class="lang-en">Shaping <br> Future Leaders</span><span class="lang-bn">আগামীর দক্ষ <br> প্রজন্ম গড়ছি</span></h1>
+                    <p class="text-lg text-slate-500 mb-10 italic">"Empowering students with knowledge, moral values, and modern digital education since 2002."</p>
+                    <div class="flex gap-4">
+                        <a href="admission.html" class="bg-blue-800 text-white px-10 py-4 rounded-2xl font-black text-lg shadow-xl shadow-blue-200 uppercase">Join Us</a>
+                        <a href="notice.html" class="border-2 border-slate-200 px-10 py-4 rounded-2xl font-black text-lg hover:bg-slate-50 transition uppercase">Notice</a>
                     </div>
                 </div>
             </div>
-
-            <!-- Right Slider (6 Pics, 2.5s) -->
-            <div class="lg:w-1/2 relative h-[300px] lg:h-auto overflow-hidden bg-slate-200 lg:rounded-l-[80px] shadow-2xl border-l border-white/20">
+            <!-- স্লাইডার (২.৫ সেকেন্ড) -->
+            <div class="lg:w-1/2 relative h-[350px] lg:h-auto overflow-hidden bg-slate-200 lg:rounded-l-[80px] shadow-2xl">
                 <img src="614435870_2647924445577327_8690698286034451800_n.jpg" class="slide active-slide w-full h-full object-cover">
-            <img src="675787485_2743198996049871_635082073511636268_n.jpg" class="slide w-full h-full object-cover">
-            <img src="495578347_2422795028090271_5930092651986941244_n.jpg" class="slide w-full h-full object-cover">
-            <img src="553540002_2549355045434268_8768094199858013701_n.jpg" class="slide w-full h-full object-cover">
-            <img src="600254812_2623029231400182_1302009090005651457_n.jpg" class="slide w-full h-full object-cover">
-            <img src="622359527_2662236600812778_7838158106628858497_n.jpg" class="slide w-full h-full object-cover">
-                
-                <div class="absolute bottom-10 left-10 bg-black/40 backdrop-blur-xl p-5 rounded-3xl border border-white/10 text-white hidden lg:block">
-                    <p class="text-[10px] font-bold uppercase tracking-widest mb-1 text-yellow-400">Campus View</p>
-                    <h4 class="text-lg font-black italic">Child Care High School Life</h4>
-                </div>
+                <img src="269905979_437348131375631_5445971195192735694_n.jpg" class="slide w-full h-full object-cover">
+                <img src="495578347_2422795028090271_5930092651986941244_n.jpg" class="slide w-full h-full object-cover">
+                <img src="553540002_2549355045434268_8768094199858013701_n.jpg" class="slide w-full h-full object-cover">
+                <img src="600254812_2623029231400182_1302009090005651457_n.jpg" class="slide w-full h-full object-cover">
+                <img src="501266512_2438825496487224_3266584294024762079_n.jpg" class="slide w-full h-full object-cover">
             </div>
         </section>
 
-        <!-- STATS SECTION -->
-        <section class="py-12 bg-white relative z-10 -mt-10 mx-6 lg:mx-20 rounded-[40px] shadow-2xl border border-slate-100">
-            <div class="container mx-auto px-6 text-center">
-                <div class="grid grid-cols-2 lg:grid-cols-4 gap-8">
-                    <div class="p-2"><h3 class="text-2xl lg:text-5xl font-black text-blue-900">450+</h3><p class="text-[8px] text-slate-400 uppercase font-black">Students</p></div>
-                    <div class="p-2"><h3 class="text-2xl lg:text-5xl font-black text-red-600">20+</h3><p class="text-[8px] text-slate-400 uppercase font-black">Expert Teachers</p></div>
-                    <div class="p-2"><h3 class="text-2xl lg:text-5xl font-black text-green-600">100%</h3><p class="text-[8px] text-slate-400 uppercase font-black">Pass Rate</p></div>
-                    <div class="p-2"><h3 class="text-2xl lg:text-5xl font-black text-orange-500">2002</h3><p class="text-[8px] text-slate-400 uppercase font-black">Established</p></div>
-                </div>
-            </div>
-        </section>
-
-        <!-- NOTICES (DYNAMIC) -->
-        <section class="py-20 bg-slate-100">
+        <!-- নোটিশ বোর্ড (Firebase Live) -->
+        <section class="py-20 bg-slate-100 shadow-inner">
             <div class="container mx-auto px-6">
-                <div class="flex justify-between items-end mb-12">
-                    <h2 class="text-3xl lg:text-5xl font-black text-slate-800 uppercase italic tracking-tighter">Recent Notices</h2>
-                    <a href="notice.html" class="text-xs font-black text-blue-700 underline uppercase italic">View All</a>
-                </div>
-                <div id="noticeBoard" class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <!-- Loaded from Admin -->
-                </div>
+                <h2 class="text-3xl lg:text-5xl font-black text-slate-800 uppercase italic mb-12 tracking-tighter">Recent Notices</h2>
+                <div id="noticeContainer" class="grid grid-cols-1 md:grid-cols-3 gap-8"></div>
             </div>
         </section>
 
-        <!-- MAP & ADDRESS -->
+        <!-- ম্যাপ (আপনার সঠিক লোকেশন) -->
         <section class="py-24 bg-white">
-            <div class="container mx-auto px-6">
-                <div class="flex flex-col lg:flex-row gap-12 items-center">
-                    <div class="w-full lg:w-1/3 bg-blue-900 text-white p-10 rounded-[45px] shadow-2xl border-l-[12px] border-red-600">
-                        <h3 class="text-3xl font-black uppercase italic mb-6 tracking-tight">Location</h3>
-                        <div class="space-y-4 font-medium text-blue-100">
-                            <p class="flex items-start"><i class="fas fa-map-marker-alt text-red-500 text-xl mr-4 mt-1"></i> <span>Baniarchala, Memberbari, Bhabanipur, Gazipur.</span></p>
-                            <p class="flex items-center"><i class="fas fa-phone-alt text-green-400 text-xl mr-4"></i> <span>+880 1823-371159</span></p>
-                        </div>
-                        <a href="https://www.google.com/maps/search/?api=1&query=24.157896327161065,90.42231785800698" target="_blank" class="block text-center bg-white text-blue-900 py-4 rounded-2xl font-black mt-10 hover:bg-orange-500 hover:text-white transition uppercase shadow-xl italic">Get Directions</a>
-                    </div>
-                    <div class="w-full lg:w-2/3 h-[400px] lg:h-[500px] rounded-[50px] overflow-hidden shadow-2xl border-8 border-slate-50">
-                        <iframe width="100%" height="100%" frameborder="0" src="https://maps.google.com/maps?q=24.157896327161065,90.42231785800698&hl=en&z=17&output=embed"></iframe>
-                    </div>
+            <div class="container mx-auto px-6 lg:px-20 flex flex-col lg:flex-row gap-12 items-center">
+                <div class="lg:w-1/3 bg-blue-900 text-white p-10 rounded-[45px] shadow-2xl border-l-[12px] border-red-600">
+                    <h3 class="text-3xl font-black uppercase italic mb-6">Our Campus</h3>
+                    <p class="mb-4">Baniarchala, Memberbari, Gazipur.</p>
+                    <p class="font-bold text-green-400 underline">+880 1823-371159</p>
+                    <a href="https://www.google.com/maps/search/?api=1&query=24.157896327161065,90.42231785800698" target="_blank" class="block text-center bg-white text-blue-900 py-3 rounded-xl font-bold mt-8">GET DIRECTIONS</a>
+                </div>
+                <div class="lg:w-2/3 w-full h-[450px] rounded-[50px] overflow-hidden border-8 shadow-2xl border-slate-50">
+                    <iframe width="100%" height="100%" frameborder="0" src="https://maps.google.com/maps?q=24.157896327161065,90.42231785800698&hl=en&z=17&output=embed"></iframe>
                 </div>
             </div>
         </section>
     </main>
 
-    <!-- FOOTER -->
-    <footer class="bg-slate-900 text-white pt-20 pb-10">
-        <div class="container mx-auto px-10 text-center">
-            <h4 class="text-2xl font-black uppercase italic mb-4 tracking-tighter">Child Care High School</h4>
-            <p class="text-slate-500 max-w-lg mx-auto mb-10 text-sm font-medium italic">Baniarchala, Memberbari, Bhabanipur, Gazipur-1740. Serving Excellence since 2002.</p>
-            
-            <div class="flex justify-center space-x-8 text-3xl mb-16">
-                <a href="https://www.facebook.com/share/1Kkk4KKpTG/" target="_blank" class="hover:text-blue-500 transition shadow-lg"><i class="fab fa-facebook"></i></a>
-                <a href="#" class="hover:text-red-600 transition shadow-lg"><i class="fab fa-youtube"></i></a>
-                <a href="https://wa.me/8801823371159" target="_blank" class="hover:text-green-500 transition shadow-lg"><i class="fab fa-whatsapp"></i></a>
-            </div>
-
-            <div class="border-t border-slate-800 pt-10">
-                <p class="text-slate-600 text-[10px] font-black uppercase tracking-[5px]">&copy; 2026. ALL RIGHTS RESERVED.</p>
-                <div class="mt-8">
-                    <p class="text-slate-500 text-[8px] lg:text-[10px] font-bold">
-                        WEBSITE DEVELOPED BY <br>
-                        <a href="https://wa.me/8801823371159" target="_blank" class="text-blue-500 hover:text-white transition tracking-widest font-black uppercase underline decoration-blue-800">Yeasin Tech Solution</a>
-                    </p>
-                </div>
-            </div>
+    <footer class="bg-slate-900 text-white py-12 text-center">
+        <div class="flex justify-center space-x-6 text-3xl mb-8">
+            <a href="https://www.facebook.com/share/1Kkk4KKpTG/" target="_blank"><i class="fab fa-facebook hover:text-blue-500 transition"></i></a>
+            <a href="https://wa.me/8801823371159" target="_blank"><i class="fab fa-whatsapp hover:text-green-500 transition"></i></a>
         </div>
+        <p class="text-slate-600 text-[10px] font-black tracking-[5px] uppercase italic">&copy; 2026. ALL RIGHTS RESERVED.</p>
+        <p class="text-slate-500 text-[9px] mt-6 font-bold">WEBSITE BY <a href="https://wa.me/8801823371159" class="text-blue-400 underline uppercase">Yeasin Tech Solution</a></p>
     </footer>
 
-    <!-- JS Logic -->
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
     <script>
+        const firebaseConfig = { apiKey: "AIzaSyCL8XMXMrKVZm-W-V92z0FMuiZqBP6W_cU", authDomain: "childcarehs-32f0e.firebaseapp.com", databaseURL: "https://childcarehs-32f0e-default-rtdb.asia-southeast1.firebasedatabase.app", projectId: "childcarehs-32f0e", storageBucket: "childcarehs-32f0e.appspot.com", messagingSenderId: "141971192886", appId: "1:141971192886:web:70db4fd887bd9b02ebac97" };
+        firebase.initializeApp(firebaseConfig); const db = firebase.database();
+
         // স্লাইডার
-        let cur = 0;
-        const slides = document.querySelectorAll('.slide');
-        function slideShow() {
-            slides.forEach(s => s.classList.remove('active-slide'));
-            cur = (cur + 1) % slides.length;
-            slides[cur].classList.add('active-slide');
-            setTimeout(slideShow, 2500); 
-        }
+        let cur = 0; const slides = document.querySelectorAll('.slide');
+        function slideShow() { slides.forEach(s => s.classList.remove('active-slide')); cur = (cur + 1) % slides.length; slides[cur].classList.add('active-slide'); setTimeout(slideShow, 2500); }
         slideShow();
 
-        // ভাষা পরিবর্তন
-        function toggleLanguage() {
-            const body = document.getElementById('mainBody');
-            const btnText = document.getElementById('btnText');
-            if (body.getAttribute('lang') === 'en') {
-                body.setAttribute('lang', 'bn'); btnText.innerText = "EN";
-            } else {
-                body.setAttribute('lang', 'en'); btnText.innerText = "BN";
-            }
-        }
-
-        // মোবাইল মেনু টগল
-        function toggleMobileMenu() {
-            const menu = document.getElementById('mobileMenu');
-            const icon = document.getElementById('menuIcon');
-            menu.classList.toggle('hidden');
-            if(menu.classList.contains('hidden')) {
-                icon.className = "fas fa-bars";
-            } else {
-                icon.className = "fas fa-times";
-            }
-        }
-
         // নোটিশ লোড
-        window.onload = function() {
-            let notices = JSON.parse(localStorage.getItem('notices')) || [];
-            const board = document.getElementById('noticeBoard');
-            if(notices.length === 0) {
-                board.innerHTML = "<p class='text-slate-400 italic text-center w-full col-span-3 py-10'>No recent announcements.</p>";
-            } else {
-                board.innerHTML = notices.slice(0, 3).map(n => `
-                    <div class="bg-white p-8 rounded-[40px] shadow-xl border border-slate-50 group hover:-translate-y-1 transition">
-                        <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest italic">${n.date}</span>
-                        <h3 class="text-xl font-black text-blue-900 mt-4 leading-tight underline decoration-red-500 decoration-2">${n.title}</h3>
-                        <p class="text-slate-500 mt-4 text-sm font-medium italic line-clamp-3">${n.desc}</p>
-                        ${n.link || n.file ? `<a href="${n.link || n.file}" target="_blank" class="mt-6 inline-block text-blue-800 font-black text-xs hover:underline uppercase">View Media</a>` : ''}
-                    </div>
-                `).join('');
-            }
-        };
+        db.ref('notices').orderByChild('timestamp').on('value', (snap) => {
+            let data = snap.val(); let list = []; for(let id in data) list.unshift(data[id]);
+            document.getElementById('noticeContainer').innerHTML = list.slice(0, 3).map(n => `
+                <div class="bg-white p-8 rounded-3xl shadow-xl border-t-8 border-orange-500 transition hover:-translate-y-2">
+                    <span class="text-xs font-bold text-slate-400 uppercase italic">${n.date}</span>
+                    <h3 class="text-xl font-black text-blue-900 mt-2">${n.title}</h3>
+                    <p class="text-slate-500 mt-4 text-sm italic line-clamp-3">${n.desc}</p>
+                    ${n.link || n.file ? `<a href="${n.link || n.file}" target="_blank" class="mt-4 inline-block bg-blue-100 text-blue-800 px-4 py-1 rounded-full text-xs font-black uppercase">View Media</a>` : ''}
+                </div>`).join('');
+        });
+
+        function toggleLanguage() { const body = document.getElementById('mainBody'); const btn = document.getElementById('btnText'); if (body.getAttribute('lang') === 'en') { body.setAttribute('lang', 'bn'); btn.innerText = "EN"; } else { body.setAttribute('lang', 'en'); btn.innerText = "BN"; } }
     </script>
 </body>
 </html>
