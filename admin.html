@@ -1,146 +1,315 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Master Control | Child Care HS</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Master Control | Child Care High School</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Font & Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
+
     <style>
-        body { font-family: 'Poppins', sans-serif; background-color: #f8fafc; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f8fafc; }
         .tab-btn.active { background: #1e40af; color: white; box-shadow: 0 10px 15px -3px rgba(30, 64, 175, 0.3); }
         .hidden { display: none; }
-        input, select, textarea { border: 2px solid #e2e8f0; border-radius: 12px; padding: 12px; outline: none; width: 100%; }
+        input, select, textarea { 
+            border: 2px solid #e2e8f0; border-radius: 12px; padding: 12px; outline: none; width: 100%; transition: 0.3s;
+        }
         input:focus, select:focus { border-color: #1e40af; background: #fff; }
+        .sidebar-item:hover:not(.active) { background-color: #f1f5f9; transform: translateX(5px); }
+        .manage-table th { @apply p-4 text-left text-xs font-bold uppercase text-slate-400 border-b bg-slate-50; }
+        .manage-table td { @apply p-4 text-sm border-b; }
     </style>
 </head>
-<body class="min-h-screen flex flex-col lg:flex-row">
+<body class="min-h-screen flex flex-col lg:flex-row overflow-x-hidden">
+
+    <script>
+        // Your Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCL8XMXMrKVZm-W-V92z0FMuiZqBP6W_cU",
+            authDomain: "childcarehs-32f0e.firebaseapp.com",
+            databaseURL: "https://childcarehs-32f0e-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "childcarehs-32f0e",
+            storageBucket: "childcarehs-32f0e.appspot.com",
+            messagingSenderId: "141971192886",
+            appId: "1:141971192886:web:70db4fd887bd9b02ebac97",
+            measurementId: "G-SV0Z6GK7C8"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+
+        // Security Check
+        if(sessionStorage.getItem('adminLoggedIn') !== 'true') {
+            window.location.href = 'login.html';
+        }
+    </script>
+
+    <!-- SIDEBAR -->
     <aside class="w-full lg:w-72 bg-white shadow-2xl flex flex-col p-6 z-50">
-        <h1 class="text-2xl font-black text-blue-900 italic mb-10 text-center uppercase">MASTER <span class="text-red-600 font-black">ADMIN</span></h1>
-        <nav class="space-y-2 flex-1 overflow-y-auto">
-            <button onclick="openTab(event, 'studentTab')" class="tab-btn active w-full flex items-center p-4 rounded-2xl font-bold transition-all text-slate-600"><i class="fas fa-users-cog mr-4"></i> Users</button>
-            <button onclick="openTab(event, 'notTab')" class="tab-btn w-full flex items-center p-4 rounded-2xl font-bold transition-all text-slate-600"><i class="fas fa-bullhorn mr-4"></i> Notice Board</button>
-            <button onclick="openTab(event, 'diaTab')" class="tab-btn w-full flex items-center p-4 rounded-2xl font-bold transition-all text-slate-600"><i class="fas fa-book mr-4 text-sky-500"></i> Class Diary</button>
-            <button onclick="openTab(event, 'admTab')" class="tab-btn w-full flex items-center p-4 rounded-2xl font-bold transition-all text-slate-600"><i class="fas fa-user-plus mr-4 text-red-600"></i> Admissions</button>
-            <button onclick="openTab(event, 'msgTab')" class="tab-btn w-full flex items-center p-4 rounded-2xl font-bold transition-all text-slate-600"><i class="fas fa-envelope mr-4 text-purple-600"></i> Messages</button>
-            <button onclick="openTab(event, 'settingsTab')" class="tab-btn w-full flex items-center p-4 rounded-2xl font-bold transition-all text-slate-600"><i class="fas fa-cog mr-4"></i> Settings</button>
-        </nav>
-        <a href="index.html" class="mt-10 border-t pt-6 text-red-500 font-bold text-center">EXIT ADMIN</a>
-    </aside>
-
-    <main class="flex-1 p-4 lg:p-10 overflow-y-auto lg:h-screen">
-        <!-- Student Create Section -->
-        <div id="studentTab" class="tab-content">
-            <div class="bg-white p-8 rounded-[40px] shadow-xl border-t-8 border-blue-600 mb-10">
-                <h2 class="text-2xl font-black mb-6 uppercase">Create Account</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                    <input id="stdName" type="text" placeholder="Full Name">
-                    <input id="stdID" type="text" placeholder="ID Number">
-                    <input id="stdPass" type="password" placeholder="Password">
-                    <select id="stdClass"><option>One</option><option>Six</option><option>Ten</option></select>
-                </div>
-                <button onclick="saveStudent()" class="mt-6 w-full bg-blue-800 text-white font-black py-4 rounded-2xl">SAVE ACCOUNT</button>
-            </div>
-            <div id="userTableBox" class="bg-white p-6 rounded-3xl shadow-xl overflow-x-auto"></div>
-        </div>
-
-        <!-- Admissions List Section -->
-        <div id="admTab" class="tab-content hidden">
-            <h2 class="text-2xl font-black mb-6 uppercase italic">New Admission Requests</h2>
-            <div id="admissionListBox" class="bg-white p-6 rounded-3xl shadow-xl overflow-x-auto"></div>
-        </div>
-
-        <!-- Messages Section -->
-        <div id="msgTab" class="tab-content hidden">
-            <h2 class="text-2xl font-black mb-6 uppercase italic">Messages from Contact Page</h2>
-            <div id="messageListBox" class="space-y-4"></div>
-        </div>
-
-        <!-- Settings Section -->
-        <div id="settingsTab" class="tab-content hidden">
-            <div class="bg-white p-10 rounded-[40px] shadow-2xl border-t-8 border-slate-900 max-w-lg mx-auto">
-                <h2 class="text-2xl font-black text-slate-800 uppercase mb-8 text-center">Change Admin Pass</h2>
-                <input id="oldAdminPass" type="password" placeholder="Current Password" class="mb-4">
-                <input id="newAdminPass" type="password" placeholder="New Password" class="mb-6">
-                <button onclick="changeAdminPass()" class="w-full bg-slate-900 text-white font-black py-4 rounded-2xl">UPDATE</button>
-            </div>
+        <div class="mb-10 text-center">
+            <h1 class="text-2xl font-black text-blue-900 italic uppercase">MASTER <span class="text-red-600">ADMIN</span></h1>
+            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1 italic">Control Room</p>
         </div>
         
-        <!-- (বাকি ট্যাবগুলো যেমন নোটিশ ও ডায়েরি আগের মতোই থাকবে) -->
+        <nav class="space-y-1.5 flex-1 overflow-y-auto">
+            <button onclick="openTab(event, 'studentTab')" class="tab-btn active w-full flex items-center p-3 rounded-xl font-bold transition-all text-slate-600 sidebar-item">
+                <i class="fas fa-users-cog mr-4 text-blue-600"></i> Manage Users
+            </button>
+            <!-- RESULT CENTER (ফিরিয়ে আনা হয়েছে) -->
+            <button onclick="openTab(event, 'resTab')" class="tab-btn w-full flex items-center p-3 rounded-xl font-bold transition-all text-slate-600 sidebar-item">
+                <i class="fas fa-file-excel mr-4 text-green-600"></i> Result Center
+            </button>
+            <button onclick="openTab(event, 'payTab')" class="tab-btn w-full flex items-center p-3 rounded-xl font-bold transition-all text-slate-600 sidebar-item">
+                <i class="fas fa-money-check-alt mr-4 text-indigo-600"></i> Payment
+            </button>
+            <button onclick="openTab(event, 'diaTab')" class="tab-btn w-full flex items-center p-3 rounded-xl font-bold transition-all text-slate-600 sidebar-item">
+                <i class="fas fa-book mr-4 text-sky-500"></i> Class Diary
+            </button>
+            <button onclick="openTab(event, 'notTab')" class="tab-btn w-full flex items-center p-3 rounded-xl font-bold transition-all text-slate-600 sidebar-item">
+                <i class="fas fa-bullhorn mr-4 text-orange-500"></i> Notice Board
+            </button>
+            <button onclick="openTab(event, 'admTab')" class="tab-btn w-full flex items-center p-3 rounded-xl font-bold transition-all text-slate-600 sidebar-item">
+                <i class="fas fa-user-plus mr-4 text-red-600"></i> Admissions
+            </button>
+            <button onclick="openTab(event, 'msgTab')" class="tab-btn w-full flex items-center p-3 rounded-xl font-bold transition-all text-slate-600 sidebar-item">
+                <i class="fas fa-envelope mr-4 text-purple-600"></i> Messages
+            </button>
+            <button onclick="openTab(event, 'settingsTab')" class="tab-btn w-full flex items-center p-3 rounded-xl font-bold transition-all text-slate-600 sidebar-item">
+                <i class="fas fa-cog mr-4 text-slate-700"></i> Settings
+            </button>
+        </nav>
+
+        <a href="index.html" onclick="sessionStorage.removeItem('adminLoggedIn')" class="mt-6 border-t pt-4 text-red-500 font-bold text-center text-xs uppercase underline">Logout Admin</a>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-1 p-4 lg:p-10 overflow-y-auto lg:h-screen">
+        
+        <!-- 1. MANAGE USERS -->
+        <div id="studentTab" class="tab-content animate-fade">
+            <div class="bg-white p-8 rounded-[40px] shadow-xl border-t-8 border-blue-600 mb-10 text-center lg:text-left">
+                <h2 class="text-2xl font-black text-slate-800 mb-6 uppercase">Create Student Account</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <input id="stdName" type="text" placeholder="Full Name">
+                    <input id="stdID" type="text" placeholder="ID (Unique)">
+                    <input id="stdPass" type="password" placeholder="Password">
+                    <select id="stdClass">
+                        <option value="">-- Class --</option>
+                        <script>
+                            const classes = ["Play", "Nursery", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten"];
+                            classes.forEach(c => document.write(`<option value="${c}">${c}</option>`));
+                        </script>
+                    </select>
+                </div>
+                <button onclick="saveStudent()" class="mt-6 w-full bg-blue-800 text-white font-black py-4 rounded-2xl shadow-xl uppercase italic">Register Global User</button>
+            </div>
+            <div class="bg-white p-8 rounded-[40px] shadow-xl overflow-x-auto">
+                <h3 class="font-black text-slate-700 mb-4 uppercase italic">Active User Database</h3>
+                <table class="w-full manage-table">
+                    <thead><tr><th>Name</th><th>ID</th><th>Pass</th><th>Class</th><th>Action</th></tr></thead>
+                    <tbody id="userTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 2. RESULT CENTER (Excel & Google Sheet) -->
+        <div id="resTab" class="tab-content hidden">
+            <div class="bg-white p-8 rounded-[40px] shadow-xl border-t-8 border-green-600">
+                <h2 class="text-2xl font-black text-slate-800 mb-6 uppercase italic tracking-tighter">Academic Result Center</h2>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div class="p-6 bg-slate-50 rounded-3xl border-2 border-dashed">
+                        <h3 class="font-black text-blue-800 mb-4 uppercase text-xs italic tracking-widest"><i class="fas fa-link mr-2"></i>Link Google Sheet</h3>
+                        <select id="sheetClass" class="mb-4">
+                            <option value="">Select Class...</option>
+                            <script>classes.forEach(c => document.write(`<option value="${c}">${c}</option>`));</script>
+                        </select>
+                        <input id="sheetUrl" type="text" placeholder="Google Sheet Public Link" class="mb-4">
+                        <button onclick="saveSheetLink()" class="w-full bg-blue-900 text-white font-bold py-3 rounded-xl uppercase">Save Sheet</button>
+                    </div>
+                    <div class="p-6 bg-green-50 rounded-3xl border-2 border-dashed">
+                        <h3 class="font-black text-green-800 mb-4 uppercase text-xs italic tracking-widest"><i class="fas fa-file-csv mr-2"></i>Bulk Result (CSV)</h3>
+                        <input type="file" id="csvFile" accept=".csv" class="mb-4 bg-white p-2 text-xs">
+                        <button onclick="processCSV()" class="w-full bg-green-700 text-white font-bold py-3 rounded-xl uppercase shadow-md">Process CSV</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. PAYMENT CONTROL -->
+        <div id="payTab" class="tab-content hidden">
+            <div class="bg-white p-8 rounded-[40px] shadow-xl border-t-8 border-indigo-600">
+                <h2 class="text-2xl font-black text-slate-800 mb-6 uppercase italic">Fees & Payment Management</h2>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div class="bg-indigo-50 p-6 rounded-3xl">
+                        <input id="payID" type="text" placeholder="Student ID" class="mb-4">
+                        <select id="payMonth" class="mb-4 font-bold">
+                            <option>January</option><option>February</option><option>March</option><option selected>April</option>
+                        </select>
+                        <select id="payStatus" class="mb-4 font-bold text-indigo-700">
+                            <option value="Paid">PAID</option><option value="Unpaid">UNPAID</option>
+                        </select>
+                        <button onclick="updatePayment()" class="w-full bg-indigo-700 text-white font-black py-3 rounded-xl">Update Status</button>
+                    </div>
+                    <div class="bg-slate-50 p-6 rounded-3xl">
+                        <select id="reportClass" class="mb-4"><option value="">Class Report</option><script>classes.forEach(c => document.write(`<option value="${c}">${c}</option>`));</script></select>
+                        <button onclick="loadPaymentReport()" class="w-full bg-slate-800 text-white font-black py-3 rounded-xl mb-4 italic">View Report</button>
+                        <div id="reportBox" class="bg-white p-4 rounded-xl border max-h-60 overflow-y-auto text-xs"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. CLASS DIARY -->
+        <div id="diaTab" class="tab-content hidden">
+            <div class="bg-white p-8 rounded-[40px] shadow-xl border-t-8 border-sky-500 mb-10">
+                <h2 class="text-2xl font-black text-slate-800 mb-6 uppercase italic tracking-tighter">Publish Homework</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                    <select id="diaryCls" onchange="autoSub(); loadDiaryHistory();" class="font-bold"><option value="">-- Class --</option><script>classes.forEach(c => document.write(`<option value="${c}">${c}</option>`));</script></select>
+                    <select id="diarySub" class="font-bold"><option value="">-- Subject --</option></select>
+                    <input id="diaryDate" type="date" class="font-bold italic">
+                </div>
+                <textarea id="diaryTask" placeholder="Type homework detail..." class="h-40 mb-6 italic"></textarea>
+                <button onclick="saveDiary()" class="w-full bg-sky-600 text-white py-4 rounded-2xl font-black text-lg shadow-xl uppercase">Publish Diary</button>
+            </div>
+            <div id="diaryHistory" class="space-y-4"></div>
+        </div>
+
+        <!-- 5. NOTICE BOARD -->
         <div id="notTab" class="tab-content hidden">
-            <div class="bg-white p-8 rounded-[40px] shadow-xl border-t-8 border-orange-500 mb-10">
-                <h2 class="text-2xl font-black text-slate-800 mb-6 uppercase">Post Notice</h2>
-                <input id="notTitle" type="text" placeholder="Title" class="mb-4">
-                <textarea id="notDesc" placeholder="Description" class="mb-4 h-32"></textarea>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4"><input id="notLink" type="text" placeholder="Media Link"><input id="notFile" type="file" accept="image/*,.pdf" class="bg-slate-50 p-2"></div>
-                <button onclick="saveNotice()" class="w-full bg-orange-600 text-white py-4 rounded-2xl">PUBLISH</button>
+            <div class="bg-white p-8 rounded-[40px] shadow-xl border-t-8 border-orange-500 mb-10 text-center lg:text-left">
+                <h2 class="text-2xl font-black text-slate-800 mb-6 uppercase italic tracking-tighter">Multimedia Notice</h2>
+                <input id="notTitle" type="text" placeholder="Title" class="mb-4 font-bold">
+                <textarea id="notDesc" placeholder="Details..." class="mb-4 h-32"></textarea>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <input id="notLink" type="text" placeholder="URL Link">
+                    <div class="bg-slate-50 p-2.5 rounded-xl border"><label class="text-[9px] font-black text-slate-400 block uppercase">Upload File:</label><input id="notFile" type="file" accept="image/*,.pdf" class="text-[10px]"></div>
+                </div>
+                <button onclick="saveNotice()" class="w-full bg-orange-600 text-white py-4 rounded-2xl font-black uppercase">Publish Live</button>
             </div>
             <div id="noticeHistory" class="space-y-4"></div>
         </div>
 
-        <div id="diaTab" class="tab-content hidden">
-            <div class="bg-white p-8 rounded-[40px] shadow-xl border-t-8 border-sky-500 mb-10">
-                <h2 class="text-2xl font-black text-slate-800 mb-6 uppercase tracking-tighter italic">Class Diary Update</h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-                    <select id="diaryCls" onchange="autoSub(); loadDiaryHistory();"><option value="">-- Class --</option><option>Six</option><option>Ten</option></select>
-                    <select id="diarySub"><option>Select Subject</option></select>
-                    <input id="diaryDate" type="date">
-                </div>
-                <textarea id="diaryTask" placeholder="Homework" class="mb-4 h-32"></textarea>
-                <button onclick="saveDiary()" class="w-full bg-sky-600 text-white py-4 rounded-2xl font-black">POST DIARY</button>
+        <!-- 6. ADMISSIONS & MESSAGES -->
+        <div id="admTab" class="tab-content hidden"><h2 class="text-2xl font-black mb-6 italic italic uppercase">Admission Requests</h2><div id="admissionListBox" class="bg-white p-6 rounded-[30px] shadow-xl overflow-x-auto"></div></div>
+        <div id="msgTab" class="tab-content hidden"><h2 class="text-2xl font-black mb-6 italic italic uppercase">User Messages</h2><div id="messageListBox" class="space-y-4"></div></div>
+
+        <!-- 7. ADMIN SETTINGS -->
+        <div id="settingsTab" class="tab-content hidden">
+            <div class="bg-white p-10 rounded-[40px] shadow-2xl border-t-8 border-slate-900 max-w-lg mx-auto text-center italic">
+                <h2 class="text-2xl font-black text-slate-800 uppercase mb-8">Change Admin Key</h2>
+                <input id="oldAdminPass" type="password" placeholder="Current Password" class="mb-4 italic">
+                <input id="newAdminPass" type="password" placeholder="New Password" class="mb-6 italic">
+                <button onclick="changeAdminPass()" class="w-full bg-slate-900 text-white font-black py-4 rounded-2xl uppercase shadow-xl">Update Password</button>
             </div>
-            <div id="diaryHistory" class="space-y-4"></div>
         </div>
     </main>
 
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
     <script>
-        const firebaseConfig = { apiKey: "AIzaSyCL8XMXMrKVZm-W-V92z0FMuiZqBP6W_cU", authDomain: "childcarehs-32f0e.firebaseapp.com", databaseURL: "https://childcarehs-32f0e-default-rtdb.asia-southeast1.firebasedatabase.app", projectId: "childcarehs-32f0e", storageBucket: "childcarehs-32f0e.appspot.com", messagingSenderId: "141971192886", appId: "1:141971192886:web:70db4fd887bd9b02ebac97" };
-        firebase.initializeApp(firebaseConfig); const db = firebase.database();
+        // --- Subject Database ---
+        const subjectData = {
+            "Play": ["Bangla", "English", "Math", "Drawing"], "Nursery": ["Bangla", "English", "Math", "Religion", "Drawing"],
+            "One": ["Bangla", "English", "Math", "Science", "BGS", "Religion"],
+            "Five": ["Bangla 1st", "Bangla 2nd", "English 1st", "English 2nd", "Math", "Science", "BGS", "Religion"],
+            "Six": ["Bangla 1st", "Bangla 2nd", "English 1st", "English 2nd", "Math", "Science", "BGS", "Digital Tech", "Religion"],
+            "Nine": ["Bangla 1st", "Bangla 2nd", "English 1st", "English 2nd", "Math", "Physics", "Chemistry", "Biology", "Higher Math", "Accounting", "Business Ent.", "Finance", "Civics", "Geography", "Economics", "Religion", "ICT", "BGS"],
+            "Ten": ["Bangla 1st", "Bangla 2nd", "English 1st", "English 2nd", "Math", "Physics", "Chemistry", "Biology", "Higher Math", "Accounting", "Business Ent.", "Finance", "Civics", "Geography", "Economics", "Religion", "ICT", "BGS"]
+        };
 
-        function openTab(evt, id) { 
-            document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden')); 
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active')); 
-            document.getElementById(id).classList.remove('hidden'); evt.currentTarget.classList.add('active');
-            if(id === 'studentTab') loadStudents();
-            if(id === 'admTab') loadAdmissions();
-            if(id === 'msgTab') loadMessages();
-            if(id === 'notTab') loadNotices();
+        // --- GLOBAL LOGIC ---
+        function openTab(evt, tabId) {
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(tabId).classList.remove('hidden');
+            evt.currentTarget.classList.add('active');
+            if(tabId === 'studentTab') loadStudents();
+            if(tabId === 'notTab') loadNoticeHistory();
+            if(tabId === 'diaTab') loadDiaryHistory();
+            if(tabId === 'admTab') loadAdmissions();
+            if(tabId === 'msgTab') loadMessages();
         }
 
-        // Functions for Admissions & Messages
+        // Student Handlers
+        function saveStudent() {
+            const name = document.getElementById('stdName').value, id = document.getElementById('stdID').value.trim(), pass = document.getElementById('stdPass').value, cls = document.getElementById('stdClass').value;
+            if(!name || !id || !pass || !cls) return alert("Fill all fields!");
+            db.ref('students/' + id).set({ name, id, password: pass, class: cls }).then(() => { alert("Created!"); loadStudents(); });
+        }
+        function loadStudents() {
+            db.ref('students').on('value', (snap) => {
+                let data = snap.val(); let body = document.getElementById('userTableBody'); body.innerHTML = "";
+                for(let id in data) body.innerHTML += `<tr><td>${data[id].name}</td><td class="font-mono">${data[id].id}</td><td>${data[id].password}</td><td><span class="text-blue-700 font-bold">${data[id].class}</span></td><td><button onclick="editStd('${id}')" class="text-blue-500 mr-4"><i class="fas fa-edit"></i></button><button onclick="db.ref('students/${id}').remove()" class="text-red-500"><i class="fas fa-trash"></i></button></td></tr>`;
+            });
+        }
+        function editStd(id) {
+            db.ref('students/' + id).once('value', s => {
+                let d = s.val(), n = prompt("New Name:", d.name), p = prompt("New Pass:", d.password);
+                if(n && p) db.ref('students/' + id).update({ name: n, password: p });
+            });
+        }
+
+        // Notice Handlers (Fixed Delete)
+        async function saveNotice() {
+            let fileData = ""; const fInput = document.getElementById('notFile');
+            if(fInput.files[0]) { const reader = new FileReader(); reader.readAsDataURL(fInput.files[0]); await new Promise(r => reader.onload = () => { fileData = reader.result; r(); }); }
+            db.ref('notices').push({ title: document.getElementById('notTitle').value, desc: document.getElementById('notDesc').value, link: document.getElementById('notLink').value, file: fileData, date: new Date().toLocaleDateString(), timestamp: Date.now() }).then(() => alert("Published!"));
+        }
+        function loadNoticeHistory() {
+            db.ref('notices').orderByChild('timestamp').on('value', (snap) => {
+                let data = snap.val(); let list = []; for(let id in data) list.unshift({id, ...data[id]});
+                document.getElementById('noticeHistory').innerHTML = list.map(n => `<div class="p-4 bg-white border rounded-xl flex justify-between items-center shadow-sm"><div><b>${n.title}</b></div><button onclick="db.ref('notices/${n.id}').remove()" class="text-red-500"><i class="fas fa-trash"></i></button></div>`).join('');
+            });
+        }
+
+        // Diary Handlers
+        function autoSub() {
+            const cls = document.getElementById('diaryCls').value, subMenu = document.getElementById('diarySub');
+            subMenu.innerHTML = '<option value="">Subject</option>';
+            let list = subjectData[cls] || subjectData["One"];
+            list.forEach(s => { let o = document.createElement('option'); o.value = s; o.innerText = s; subMenu.appendChild(o); });
+        }
+        function saveDiary() {
+            const cls = document.getElementById('diaryCls').value;
+            db.ref('diaries/' + cls).push({ sub: document.getElementById('diarySub').value, task: document.getElementById('diaryTask').value, date: document.getElementById('diaryDate').value, timestamp: Date.now() }).then(() => alert("Updated!"));
+        }
+        function loadDiaryHistory() {
+            const cls = document.getElementById('diaryCls').value;
+            db.ref('diaries/' + cls).orderByChild('timestamp').on('value', (snap) => {
+                let data = snap.val(); let list = []; for(let id in data) list.unshift({id, ...data[id]});
+                document.getElementById('diaryHistory').innerHTML = list.map(d => `<div class="p-4 bg-white border rounded-xl flex justify-between shadow-sm"><div><b>${d.sub}</b> - ${d.date}</div><button onclick="db.ref('diaries/${cls}/${d.id}').remove()" class="text-red-500"><i class="fas fa-trash"></i></button></div>`).join('');
+            });
+        }
+
+        // Admission & Message Handlers
         function loadAdmissions() {
-            db.ref('admissions').on('value', snap => {
-                let data = snap.val(); let h = `<table class="w-full text-xs"><tr><th>Name</th><th>Class</th><th>Phone</th><th>Action</th></tr>`;
+            db.ref('admissions').on('value', s => {
+                let data = s.val(), h = `<table class="w-full text-xs"><tr><th>Name</th><th>Class</th><th>Phone</th><th>Action</th></tr>`;
                 for(let i in data) h += `<tr><td>${data[i].name}</td><td>${data[i].class}</td><td>${data[i].phone}</td><td><button onclick="db.ref('admissions/${i}').remove()" class="text-red-500">Del</button></td></tr>`;
                 document.getElementById('admissionListBox').innerHTML = h + "</table>";
             });
         }
         function loadMessages() {
-            db.ref('messages').on('value', snap => {
-                let data = snap.val(); let h = "";
-                for(let i in data) h += `<div class="p-4 bg-white shadow-sm border rounded-xl flex justify-between"><div><b>${data[i].name}:</b> ${data[i].message} <br><small>${data[i].date}</small></div><button onclick="db.ref('messages/${i}').remove()" class="text-red-500">Del</button></div>`;
+            db.ref('messages').on('value', s => {
+                let data = s.val(), h = "";
+                for(let i in data) h += `<div class="p-4 bg-slate-50 border rounded-2xl flex justify-between"><div><b>${data[i].name}:</b> ${data[i].message} <br><small>${data[i].date}</small></div><button onclick="db.ref('messages/${i}').remove()" class="text-red-500">Del</button></div>`;
                 document.getElementById('messageListBox').innerHTML = h || "No messages.";
             });
         }
 
-        // [Student, Notice, Diary Logics go here (using db.ref().push or .set)]
-        function saveStudent() { const id = document.getElementById('stdID').value.trim(); db.ref('students/' + id).set({ name: document.getElementById('stdName').value, id: id, password: document.getElementById('stdPass').value, class: document.getElementById('stdClass').value }).then(() => alert("Saved!")); }
-        function loadStudents() { db.ref('students').on('value', (snap) => { let data = snap.val(); let h = `<table class="w-full text-xs"><tr><th>Name</th><th>ID</th><th>Pass</th><th>Class</th><th>Action</th></tr>`; for(let id in data) h += `<tr><td>${data[id].name}</td><td>${data[id].id}</td><td>${data[id].password}</td><td>${data[id].class}</td><td><button onclick="db.ref('students/${id}').remove()" class="text-red-500">Del</button></td></tr>`; document.getElementById('userTableBox').innerHTML = h + "</table>"; }); }
-        
-        async function saveNotice() { 
-            let fileData = ""; const fInput = document.getElementById('notFile');
-            if(fInput.files[0]) { const reader = new FileReader(); reader.readAsDataURL(fInput.files[0]); await new Promise(r => reader.onload = () => { fileData = reader.result; r(); }); }
-            db.ref('notices').push({ title: document.getElementById('notTitle').value, desc: document.getElementById('notDesc').value, link: document.getElementById('notLink').value, file: fileData, date: new Date().toLocaleDateString(), timestamp: Date.now() }).then(() => alert("Published!"));
-        }
-        function loadNotices() { db.ref('notices').orderByChild('timestamp').on('value', (snap) => { let data = snap.val(); let list = []; for(let id in data) list.unshift({id, ...data[id]}); document.getElementById('noticeHistory').innerHTML = list.map(n => `<div class="p-4 bg-slate-50 border rounded-xl flex justify-between"><div><b>${n.title}</b></div><button onclick="db.ref('notices/${n.id}').remove()" class="text-red-500">Del</button></div>`).join(''); }); }
-        
-        function saveDiary() { const cls = document.getElementById('diaryCls').value; db.ref('diaries/' + cls).push({ sub: document.getElementById('diarySub').value, task: document.getElementById('diaryTask').value, date: document.getElementById('diaryDate').value, timestamp: Date.now() }).then(() => alert("Diary Posted!")); }
-        function loadDiaryHistory() { const cls = document.getElementById('diaryCls').value; db.ref('diaries/' + cls).orderByChild('timestamp').on('value', (snap) => { let data = snap.val(); let list = []; for(let id in data) list.unshift({id, ...data[id]}); document.getElementById('diaryHistory').innerHTML = list.map(d => `<div class="p-4 bg-slate-50 border rounded-xl flex justify-between"><div><b>${d.sub}</b> - ${d.date}</div><button onclick="db.ref('diaries/${cls}/${d.id}').remove()" class="text-red-500">Del</button></div>`).join(''); }); }
+        // Settings, Payment, CSV (Existing Code Re-integrated)
+        function changeAdminPass() { db.ref('settings/adminPass').once('value', s => { let old = s.val() || 'Yeasin87*#@'; if(document.getElementById('oldAdminPass').value === old) { db.ref('settings/adminPass').set(document.getElementById('newAdminPass').value); alert("Done!"); } else alert("Wrong!"); }); }
+        function saveSheetLink() { let s = {}; s[document.getElementById('sheetClass').value] = document.getElementById('sheetUrl').value; db.ref('class_sheets').update(s); alert("Linked!"); }
+        function processCSV() { const f = document.getElementById('csvFile').files[0]; if(!f) return; const r = new FileReader(); r.onload = (e) => { e.target.result.split('\n').forEach(l => { const c = l.split(','); if(c.length >= 2) db.ref('results/' + c[0].trim()).set({ gpa: c[1].trim(), date: new Date().toLocaleDateString() }); }); alert("Bulk Done!"); }; r.readAsText(f); }
+        function updatePayment() { db.ref('payments/' + document.getElementById('payID').value.trim() + '/' + document.getElementById('payMonth').value).set(document.getElementById('payStatus').value).then(()=>alert("Saved")); }
+        function loadPaymentReport() { const cls = document.getElementById('reportClass').value; db.ref('students').once('value', s => { let stds = s.val(), h = `<table class="w-full"><tr><th>ID</th><th>April Status</th></tr>`; for(let i in stds) { if(stds[i].class === cls) h += `<tr><td>${stds[i].id}</td><td id="p-${stds[i].id}">Loading...</td></tr>`; checkP(stds[i].id); } document.getElementById('reportBox').innerHTML = h + `</table>`; }); }
+        function checkP(id) { db.ref('payments/'+id+'/April').on('value', s => document.getElementById('p-'+id).innerText = s.val() || "Unpaid"); }
 
-        function changeAdminPass() { db.ref('settings/adminPass').once('value', snap => { const old = snap.val() || 'Yeasin87*#@'; if(document.getElementById('oldAdminPass').value === old) { db.ref('settings/adminPass').set(document.getElementById('newAdminPass').value); alert("Updated!"); } else alert("Old pass wrong!"); }); }
-        
-        window.onload = () => { if(sessionStorage.getItem('adminLoggedIn') !== 'true') window.location.href = 'login.html'; loadStudents(); };
+        window.onload = () => { document.getElementById('diaryDate').valueAsDate = new Date(); loadStudents(); };
     </script>
 </body>
 </html>
