@@ -1,132 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login | Child Care High School</title>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Student & Admin Portal</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* ডুয়াল ল্যাঙ্গুয়েজ সিস্টেম */
-        body[lang="bn"] .lang-en { display: none !important; }
-        body[lang="bn"] .lang-bn { display: inline-block !important; }
-        body[lang="en"] .lang-bn { display: none !important; }
-        body[lang="en"] .lang-en { display: inline-block !important; }
-
-        .bg-overlay {
-            background: linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.8)), 
-                        url('614435870_2647924445577327_8690698286034451800_n.jpg');
-            background-size: cover; background-position: center; background-attachment: fixed;
-        }
-        .glass-card {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(15px);
-            border-radius: 30px;
-        }
+        .bg-login { background: linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.8)), url('614435870_2647924445577327_8690698286034451800_n.jpg'); background-size: cover; background-position: center; background-attachment: fixed; }
+        .glass-card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(15px); border-radius: 40px; }
     </style>
 </head>
-<body class="bg-overlay min-h-screen flex items-center justify-center p-4" lang="en" id="mainBody">
+<body class="bg-login min-h-screen flex items-center justify-center p-4">
 
-    <!-- Language Toggle -->
-    <div class="fixed top-6 right-6">
-        <button onclick="toggleLanguage()" class="bg-blue-600 text-white px-4 py-2 rounded-full font-black shadow-2xl border-2 border-white/30">
-            <span id="btnText">BN</span>
-        </button>
-    </div>
-
-    <div class="w-full max-w-[450px] glass-card shadow-2xl overflow-hidden">
-        
-        <!-- Tab Headers -->
+    <div class="w-full max-w-[450px] glass-card shadow-2xl overflow-hidden animate-fade-in">
         <div class="flex border-b">
-            <button onclick="showTab('student')" id="stdTab" class="w-1/2 py-4 font-black text-lg text-blue-800 border-b-4 border-blue-800 bg-blue-50/50">
-                <span class="lang-en">STUDENT</span><span class="lang-bn">শিক্ষার্থী</span>
-            </button>
-            <button onclick="showTab('admin')" id="admTab" class="w-1/2 py-4 font-black text-lg text-slate-500 hover:bg-slate-100 transition">
-                <span class="lang-en">ADMIN</span><span class="lang-bn">এডমিন</span>
-            </button>
+            <button onclick="showTab('student')" id="stdTab" class="w-1/2 py-5 font-black text-blue-800 border-b-4 border-blue-800 bg-blue-50/50 uppercase">Student</button>
+            <button onclick="showTab('admin')" id="admTab" class="w-1/2 py-5 font-black text-slate-400 hover:bg-slate-100 transition uppercase">Admin</button>
         </div>
 
-        <div class="p-8 lg:p-10">
-            <!-- Student Login Form -->
+        <div class="p-8 lg:p-12 text-center">
             <div id="studentForm">
-                <div class="text-center mb-8">
-                    <div class="bg-blue-800 text-white w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4"><i class="fas fa-user-graduate text-3xl"></i></div>
-                    <h2 class="text-xl font-black text-slate-800 uppercase tracking-tighter">Student Login</h2>
+                <h1 class="text-2xl font-black text-blue-900 uppercase mb-8 italic tracking-tighter">Student Login</h1>
+                <div class="space-y-4">
+                    <input id="sID" type="text" placeholder="ID Number" class="w-full border-2 p-4 rounded-2xl outline-none focus:border-blue-800 bg-slate-50 font-bold">
+                    <input id="sPass" type="password" placeholder="Password" class="w-full border-2 p-4 rounded-2xl outline-none focus:border-blue-800 bg-slate-50 font-bold">
+                    <button onclick="stdLogin()" class="w-full bg-blue-800 text-white font-black py-4 rounded-2xl shadow-xl hover:bg-black transition transform active:scale-95">LOGIN NOW</button>
                 </div>
-                <form class="space-y-5">
-                    <input id="sID" type="text" class="w-full border-2 p-4 rounded-2xl outline-none focus:border-blue-600" placeholder="Student ID">
-                    <input id="sPass" type="password" class="w-full border-2 p-4 rounded-2xl outline-none focus:border-blue-600" placeholder="Password">
-                    <button type="button" onclick="studentLogin()" class="w-full bg-blue-800 text-white py-4 rounded-2xl font-black text-lg shadow-xl hover:bg-blue-900 transition transform active:scale-95 uppercase">Login</button>
-                </form>
             </div>
 
-            <!-- Admin Login Form -->
             <div id="adminForm" class="hidden">
-                <div class="text-center mb-8">
-                    <div class="bg-red-600 text-white w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4"><i class="fas fa-user-shield text-3xl"></i></div>
-                    <h2 class="text-xl font-black text-slate-800 uppercase tracking-tighter text-red-600">Admin Access</h2>
+                <h1 class="text-2xl font-black text-red-600 uppercase mb-8 italic tracking-tighter">Admin Access</h1>
+                <div class="space-y-4">
+                    <input id="aPass" type="password" placeholder="Admin Password" class="w-full border-2 p-4 rounded-2xl outline-none focus:border-red-600 bg-slate-50 font-bold">
+                    <button onclick="admLogin()" class="w-full bg-red-600 text-white font-black py-4 rounded-2xl shadow-xl hover:bg-black transition transform active:scale-95">UNLOOCK PANEL</button>
                 </div>
-                <form class="space-y-5">
-                    <input id="aPass" type="password" class="w-full border-2 p-4 rounded-2xl outline-none focus:border-red-600" placeholder="Admin Password">
-                    <button type="button" onclick="adminLogin()" class="w-full bg-red-600 text-white py-4 rounded-2xl font-black text-lg shadow-xl hover:bg-red-700 transition transform active:scale-95 uppercase">Unlock Admin</button>
-                </form>
             </div>
-
-            <div class="mt-10 pt-6 border-t border-slate-100 text-center font-bold text-slate-400">
-                <a href="index.html" class="hover:text-blue-800 transition"><i class="fas fa-home mr-2"></i>Back to Home</a>
-            </div>
+            
+            <div class="mt-10 border-t pt-4"><a href="index.html" class="text-slate-400 font-bold hover:text-blue-800 uppercase text-xs"><i class="fas fa-home mr-2"></i>Back to Home</a></div>
         </div>
     </div>
 
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
     <script>
-        // Tab switching
+        const firebaseConfig = { apiKey: "AIzaSyCL8XMXMrKVZm-W-V92z0FMuiZqBP6W_cU", authDomain: "childcarehs-32f0e.firebaseapp.com", databaseURL: "https://childcarehs-32f0e-default-rtdb.asia-southeast1.firebasedatabase.app", projectId: "childcarehs-32f0e", storageBucket: "childcarehs-32f0e.appspot.com", messagingSenderId: "141971192886", appId: "1:141971192886:web:70db4fd887bd9b02ebac97" };
+        firebase.initializeApp(firebaseConfig); const db = firebase.database();
+
         function showTab(type) {
-            if(type === 'student') {
-                document.getElementById('studentForm').classList.remove('hidden');
-                document.getElementById('adminForm').classList.add('hidden');
-                document.getElementById('stdTab').className = "w-1/2 py-4 font-black text-lg text-blue-800 border-b-4 border-blue-800 bg-blue-50/50";
-                document.getElementById('admTab').className = "w-1/2 py-4 font-black text-lg text-slate-500 hover:bg-slate-100 transition";
-            } else {
-                document.getElementById('studentForm').classList.add('hidden');
-                document.getElementById('adminForm').classList.remove('hidden');
-                document.getElementById('admTab').className = "w-1/2 py-4 font-black text-lg text-red-600 border-b-4 border-red-600 bg-red-50/50";
-                document.getElementById('stdTab').className = "w-1/2 py-4 font-black text-lg text-slate-500 hover:bg-slate-100 transition";
-            }
+            if(type === 'student') { document.getElementById('studentForm').classList.remove('hidden'); document.getElementById('adminForm').classList.add('hidden'); document.getElementById('stdTab').className = "w-1/2 py-5 font-black text-blue-800 border-b-4 border-blue-800 bg-blue-50/50 uppercase"; document.getElementById('admTab').className = "w-1/2 py-5 font-black text-slate-400 hover:bg-slate-100 transition uppercase"; }
+            else { document.getElementById('studentForm').classList.add('hidden'); document.getElementById('adminForm').classList.remove('hidden'); document.getElementById('admTab').className = "w-1/2 py-5 font-black text-red-600 border-b-4 border-red-600 bg-red-50/50 uppercase"; document.getElementById('stdTab').className = "w-1/2 py-5 font-black text-slate-400 hover:bg-slate-100 transition uppercase"; }
         }
 
-        // Student Login Logic
-        function studentLogin() {
-            const id = document.getElementById('sID').value.trim();
-            const pass = document.getElementById('sPass').value;
-            let students = JSON.parse(localStorage.getItem('students')) || [];
-            let user = students.find(s => s.id === id && s.password === pass);
-
-            if(user) {
-                localStorage.setItem('currentUser', JSON.stringify(user));
-                window.location.href = 'profile.html';
-            } else {
-                alert("Incorrect Student ID or Password!");
-            }
+        function stdLogin() {
+            const id = document.getElementById('sID').value.trim(); const pass = document.getElementById('sPass').value;
+            db.ref('students/' + id).once('value', (snap) => {
+                const user = snap.val();
+                if(user && user.password === pass) { localStorage.setItem('currentUser', JSON.stringify(user)); window.location.href = 'profile.html'; }
+                else { alert("Incorrect ID or Password!"); }
+            });
         }
 
-        // Admin Login Logic
-        function adminLogin() {
+        function admLogin() {
             const pass = document.getElementById('aPass').value;
-            let savedAdminPass = localStorage.getItem('adminPass') || 'Yeasin87*#@';
-            
-            if(pass === savedAdminPass) {
-                sessionStorage.setItem('adminLoggedIn', 'true');
-                window.location.href = 'admin.html';
-            } else {
-                alert("Incorrect Admin Password!");
-            }
-        }
-
-        function toggleLanguage() {
-            const b = document.getElementById('mainBody');
-            const bt = document.getElementById('btnText');
-            if (b.getAttribute('lang') === 'en') { b.setAttribute('lang', 'bn'); bt.innerText = "EN"; }
-            else { b.setAttribute('lang', 'en'); bt.innerText = "BN"; }
+            db.ref('settings/adminPass').once('value', (snap) => {
+                const saved = snap.val() || 'Yeasin87*#@';
+                if(pass === saved) { sessionStorage.setItem('adminLoggedIn', 'true'); window.location.href = 'admin.html'; }
+                else { alert("Access Denied!"); }
+            });
         }
     </script>
 </body>
