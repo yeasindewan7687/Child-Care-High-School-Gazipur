@@ -1,249 +1,124 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admission Form | Child Care High School</title>
-    
-    <!-- Tailwind CSS & Font Awesome -->
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admission | Child Care High School</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;900&display=swap" rel="stylesheet">
-
     <style>
-        body { font-family: 'Poppins', sans-serif; background-color: #f8fafc; }
-        
-        /* ডুয়াল ল্যাঙ্গুয়েজ সিস্টেম */
+        body { font-family: 'Poppins', sans-serif; }
         body[lang="bn"] .lang-en { display: none !important; }
         body[lang="bn"] .lang-bn { display: block !important; }
         body[lang="en"] .lang-bn { display: none !important; }
         body[lang="en"] .lang-en { display: block !important; }
-
-        .glass-nav {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(15px);
-        }
-
-        .admission-hero {
-            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
-        }
-
-        input, select, textarea {
-            @apply w-full border-2 border-slate-100 bg-slate-50/50 p-4 rounded-2xl outline-none focus:border-blue-600 focus:bg-white transition-all duration-300 font-medium;
-        }
-
-        label { @apply text-[11px] font-black uppercase tracking-widest text-slate-400 ml-2 mb-1 block; }
-        
-        .form-card {
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
-        }
+        .glass-nav { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(15px); }
+        input, select, textarea { @apply w-full border-2 border-slate-100 bg-slate-50 p-4 rounded-2xl outline-none focus:border-blue-600 focus:bg-white transition-all; }
+        label { @apply text-[10px] font-black uppercase text-slate-400 ml-2 mb-1 block; }
     </style>
 </head>
-<body class="text-slate-900 overflow-x-hidden" lang="en" id="mainBody">
+<body class="bg-slate-50 font-sans overflow-x-hidden" lang="en" id="mainBody">
 
-    <!-- HEADER / NAVIGATION -->
+    <!-- HEADER -->
     <header class="fixed w-full top-0 z-[100] shadow-lg">
         <nav class="glass-nav border-b border-slate-200">
             <div class="container mx-auto px-4 lg:px-8 py-3 flex justify-between items-center">
                 <a href="index.html" class="flex items-center space-x-2">
-                    <div class="bg-blue-800 text-white p-2 rounded-xl shadow-md">
-                        <i class="fas fa-graduation-cap text-xl lg:text-2xl"></i>
-                    </div>
-                    <h1 class="text-sm lg:text-xl font-black text-blue-900 uppercase">
-                        CHILD CARE <span class="text-red-600 font-black">HIGH SCHOOL</span>
-                    </h1>
+                    <div class="bg-blue-800 text-white p-2 rounded-xl shadow-md"><i class="fas fa-graduation-cap text-xl"></i></div>
+                    <h1 class="text-sm lg:text-xl font-black text-blue-900 uppercase leading-none">CHILD CARE <br class="lg:hidden"> <span class="text-red-600 font-black">HIGH SCHOOL</span></h1>
                 </a>
-                <div class="flex items-center space-x-4">
-                    <button onclick="toggleLanguage()" class="bg-slate-200 hover:bg-slate-300 text-slate-800 px-3 py-1 rounded-full font-black text-[10px] border border-white">
-                        <span id="btnText">BN</span>
-                    </button>
-                    <a href="index.html" class="font-bold text-blue-800 text-xs underline uppercase tracking-widest">Home</a>
+                <!-- Full Menu -->
+                <ul class="hidden lg:flex space-x-4 font-bold text-slate-600 text-[10px] uppercase">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="academics.html">Academics</a></li>
+                    <li><a href="notice.html">Notice</a></li>
+                    <li><a href="diary.html">Class Diary</a></li>
+                    <li><a href="result.html">Result</a></li>
+                    <li><a href="admission.html" class="text-red-600">Admission</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+                <div class="flex items-center gap-2">
+                    <button onclick="toggleLanguage()" class="bg-slate-200 px-3 py-1 rounded-full font-black text-[10px] border border-white"><span id="btnText">BN</span></button>
+                    <button onclick="document.getElementById('mobileMenu').classList.toggle('hidden')" class="lg:hidden text-2xl text-blue-900 p-2"><i class="fas fa-bars"></i></button>
                 </div>
+            </div>
+            <!-- Mobile Menu List (Full) -->
+            <div id="mobileMenu" class="hidden lg:hidden bg-white absolute w-full left-0 p-6 space-y-4 shadow-2xl border-t font-bold text-sm z-50">
+                <a href="index.html" class="block border-b pb-2">Home</a>
+                <a href="about.html" class="block border-b pb-2">About Us</a>
+                <a href="academics.html" class="block border-b pb-2">Academics</a>
+                <a href="notice.html" class="block border-b pb-2">Notice Board</a>
+                <a href="diary.html" class="block border-b pb-2 text-green-600">Class Diary</a>
+                <a href="result.html" class="block border-b pb-2">Results</a>
+                <a href="admission.html" class="block border-b pb-2 text-red-600">Admission</a>
+                <a href="contact.html" class="block border-b pb-2">Contact</a>
             </div>
         </nav>
     </header>
 
-    <main class="pt-20">
-        <!-- BANNER SECTION -->
-        <section class="admission-hero py-16 lg:py-24 text-white text-center px-6">
-            <div class="max-w-3xl mx-auto">
-                <span class="bg-red-600 px-4 py-1 rounded-full text-[10px] font-black uppercase tracking-[3px] mb-4 inline-block italic border border-red-400">Admission Open 2026-27</span>
-                <h1 class="text-4xl lg:text-6xl font-black uppercase tracking-tighter mb-4">
-                    <span class="lang-en">Admission Form</span><span class="lang-bn">ভর্তি আবেদন ফরম</span>
-                </h1>
-                <p class="text-blue-100 font-medium italic">
-                    <span class="lang-en">"Begin your journey of academic excellence with us."</span>
-                    <span class="lang-bn">"আমাদের সাথে একাডেমিক শ্রেষ্ঠত্বের পথে আপনার যাত্রা শুরু করুন।"</span>
-                </p>
-            </div>
-        </section>
-
-        <!-- 1. ONLINE APPLICATION FORM (UPPER PART) -->
-        <section class="container mx-auto px-4 lg:px-20 -mt-16 mb-16">
-            <div class="bg-white rounded-[40px] form-card overflow-hidden">
+    <main class="pt-24 pb-20">
+        <div class="container mx-auto px-4 lg:px-20">
+            <!-- Admission Form Part (Upper) -->
+            <div class="bg-white rounded-[40px] shadow-2xl overflow-hidden mb-12">
                 <div class="p-8 lg:p-16">
-                    <div class="mb-10 text-center lg:text-left">
-                        <h2 class="text-3xl font-black text-slate-800 uppercase tracking-tight italic">
-                            <span class="lang-en">Online Application</span><span class="lang-bn">অনলাইন আবেদন</span>
-                        </h2>
-                        <div class="h-1.5 w-20 bg-red-600 mt-2 rounded-full mx-auto lg:mx-0"></div>
-                    </div>
-
-                    <form id="admissionForm" class="space-y-8">
+                    <h2 class="text-3xl font-black text-slate-800 uppercase italic mb-8">
+                        <span class="lang-en">Online Admission 2026</span><span class="lang-bn">অনলাইন ভর্তি ২০২৬</span>
+                    </h2>
+                    <form id="admissionForm" class="space-y-6">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <label><span class="lang-en">Student Full Name</span><span class="lang-bn">শিক্ষার্থীর পূর্ণ নাম</span></label>
-                                <input type="text" placeholder="Full Name">
-                            </div>
-                            <div>
-                                <label><span class="lang-en">Gender</span><span class="lang-bn">লিঙ্গ</span></label>
-                                <select>
-                                    <option>Male</option><option>Female</option><option>Other</option>
+                            <div><label><span class="lang-en">Student Name</span><span class="lang-bn">শিক্ষার্থীর নাম</span></label><input type="text" id="admName" required></div>
+                            <div><label><span class="lang-en">Mobile Number</span><span class="lang-bn">মোবাইল নম্বর</span></label><input type="tel" id="admPhone" required></div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div><label><span class="lang-en">Apply For Class</span><span class="lang-bn">শ্রেণি</span></label>
+                                <select id="admClass">
+                                    <option>Play</option><option>Nursery</option><option>One</option><option>Six</option><option>Nine</option><option>Ten</option>
                                 </select>
                             </div>
+                            <div><label><span class="lang-en">Guardian Name</span><span class="lang-bn">অভিভাবকের নাম</span></label><input type="text" id="admGuardian"></div>
                         </div>
-
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <label><span class="lang-en">Date of Birth</span><span class="lang-bn">জন্ম তারিখ</span></label>
-                                <input type="date">
-                            </div>
-                            <div>
-                                <label><span class="lang-en">Apply For Class</span><span class="lang-bn">শ্রেণি</span></label>
-                                <select id="targetClass" onchange="checkGroup()">
-                                    <option value="">Select Class...</option>
-                                    <option>Play</option><option>Nursery</option><option>One</option>
-                                    <option>Two</option><option>Three</option><option>Four</option>
-                                    <option>Five</option><option>Six</option><option>Seven</option>
-                                    <option>Eight</option><option>Nine</option><option>Ten</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <!-- Class 9-10 Group Selection -->
-                        <div id="groupDiv" class="hidden animate-fade-in bg-blue-50 p-6 rounded-3xl border border-blue-100">
-                            <label class="text-blue-900"><span class="lang-en">Select Group (Science/Arts/Commerce)</span><span class="lang-bn">বিভাগ নির্বাচন করুন</span></label>
-                            <select class="bg-white">
-                                <option>Science (বিজ্ঞান)</option>
-                                <option>Commerce (ব্যবসায় শিক্ষা)</option>
-                                <option>Arts (মানবিক)</option>
-                            </select>
-                        </div>
-
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <label><span class="lang-en">Guardian Name</span><span class="lang-bn">অভিভাবকের নাম</span></label>
-                                <input type="text">
-                            </div>
-                            <div>
-                                <label><span class="lang-en">Mobile Number</span><span class="lang-bn">মোবাইল নম্বর</span></label>
-                                <input type="tel" placeholder="01XXX-XXXXXX">
-                            </div>
-                        </div>
-
-                        <div>
-                            <label><span class="lang-en">Full Address</span><span class="lang-bn">পূর্ণ ঠিকানা</span></label>
-                            <textarea rows="3" placeholder="Village, Post, Thana, District..."></textarea>
-                        </div>
-
-                        <button type="button" onclick="submitForm()" class="w-full bg-blue-800 text-white py-5 rounded-3xl font-black text-xl shadow-2xl shadow-blue-200 hover:bg-black transition-all transform active:scale-95 uppercase tracking-widest italic">
+                        <button type="button" onclick="submitAdmission()" class="w-full bg-blue-800 text-white py-5 rounded-3xl font-black text-lg shadow-xl hover:bg-black transition uppercase italic tracking-widest">
                             <span class="lang-en">Submit Application</span><span class="lang-bn">আবেদন জমা দিন</span>
                         </button>
                     </form>
                 </div>
             </div>
-        </section>
 
-        <!-- 2. REQUIREMENTS & INFO (LOWER PART) -->
-        <section class="container mx-auto px-4 lg:px-20 mb-24">
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <!-- Requirements Card -->
-                <div class="lg:col-span-2 bg-slate-900 text-white p-10 lg:p-12 rounded-[40px] shadow-2xl">
-                    <h3 class="text-2xl font-black uppercase italic border-b-4 border-red-600 inline-block mb-8">
-                        <span class="lang-en">Admission Requirements</span><span class="lang-bn">ভর্তির জন্য যা যা প্রয়োজন</span>
-                    </h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 font-medium text-slate-300">
-                        <div class="flex items-center p-4 bg-white/5 rounded-2xl border border-white/10 transition hover:bg-white/10">
-                            <i class="fas fa-camera text-red-500 text-2xl mr-4"></i>
-                            <span>4 Copies passport size photo</span>
-                        </div>
-                        <div class="flex items-center p-4 bg-white/5 rounded-2xl border border-white/10 transition hover:bg-white/10">
-                            <i class="fas fa-file-alt text-red-500 text-2xl mr-4"></i>
-                            <span>Original TC (Previous School)</span>
-                        </div>
-                        <div class="flex items-center p-4 bg-white/5 rounded-2xl border border-white/10 transition hover:bg-white/10">
-                            <i class="fas fa-id-card text-red-500 text-2xl mr-4"></i>
-                            <span>Birth Certificate Copy</span>
-                        </div>
-                        <div class="flex items-center p-4 bg-white/5 rounded-2xl border border-white/10 transition hover:bg-white/10">
-                            <i class="fas fa-user-friends text-red-500 text-2xl mr-4"></i>
-                            <span>Parent's NID Copy</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Help Desk Card -->
-                <div class="bg-white p-10 rounded-[40px] shadow-xl border-2 border-slate-100 flex flex-col justify-center text-center">
-                    <div class="w-16 h-16 bg-blue-100 text-blue-800 rounded-2xl flex items-center justify-center text-2xl mx-auto mb-4">
-                        <i class="fas fa-phone-alt"></i>
-                    </div>
-                    <h4 class="text-xl font-black uppercase tracking-tight text-slate-800 mb-2 italic">Admission Help</h4>
-                    <p class="text-slate-400 font-bold text-xs mb-6 uppercase">For any queries call us</p>
-                    <a href="tel:+8801823371159" class="text-2xl font-black text-blue-900 hover:text-red-600 transition tracking-tighter">
-                        +880 1823-371159
-                    </a>
-                    <p class="text-[10px] font-bold text-slate-400 mt-2 uppercase italic tracking-widest">Office Time: 8am - 4pm</p>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- FOOTER -->
-    <footer class="bg-slate-900 text-white pt-20 pb-10">
-        <div class="container mx-auto px-10 text-center">
-            <h4 class="text-2xl font-black uppercase italic mb-4">Child Care High School</h4>
-            <div class="flex justify-center space-x-8 text-3xl mb-12">
-                <a href="https://www.facebook.com/share/1Kkk4KKpTG/" target="_blank" class="hover:text-blue-500 transition"><i class="fab fa-facebook"></i></a>
-                <a href="https://wa.me/8801823371159" target="_blank" class="hover:text-green-500 transition"><i class="fab fa-whatsapp"></i></a>
-            </div>
-            <div class="border-t border-slate-800 pt-10">
-                <p class="text-slate-600 text-[10px] font-black uppercase tracking-[5px]">&copy; 2026. ALL RIGHTS RESERVED.</p>
-                <div class="mt-8">
-                    <p class="text-slate-500 text-[8px] lg:text-[10px] font-bold">
-                        WEBSITE DEVELOPED BY <br>
-                        <a href="https://wa.me/8801823371159" target="_blank" class="text-blue-500 hover:text-white transition tracking-widest font-black uppercase underline decoration-blue-800">Yeasin Tech Solution</a>
-                    </p>
+            <!-- Requirements Part (Lower) -->
+            <div class="bg-slate-900 text-white p-10 lg:p-16 rounded-[40px] shadow-2xl">
+                <h3 class="text-2xl font-black uppercase italic border-b-4 border-red-600 inline-block mb-8">Admission Requirements</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-slate-300 font-medium">
+                    <p><i class="fas fa-check-circle text-green-500 mr-2"></i> 4 Copies Passport Size Photo</p>
+                    <p><i class="fas fa-check-circle text-green-500 mr-2"></i> Birth Certificate Copy</p>
+                    <p><i class="fas fa-check-circle text-green-500 mr-2"></i> Parent's NID Copy</p>
+                    <p><i class="fas fa-check-circle text-green-500 mr-2"></i> Previous TC (If Applicable)</p>
                 </div>
             </div>
         </div>
+    </main>
+
+    <footer class="bg-slate-900 text-white py-10 text-center border-t border-slate-800">
+        <p class="text-[10px] font-black uppercase tracking-[5px]">&copy; 2026. ALL RIGHTS RESERVED.</p>
+        <p class="text-slate-500 text-[9px] mt-4 uppercase font-bold">Developed By <a href="https://wa.me/8801823371159" class="text-blue-400 underline">Yeasin Tech Solution</a></p>
     </footer>
 
-    <!-- JS Logic -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
     <script>
-        function toggleLanguage() {
-            const body = document.getElementById('mainBody');
-            const btnText = document.getElementById('btnText');
-            if (body.getAttribute('lang') === 'en') {
-                body.setAttribute('lang', 'bn'); btnText.innerText = "EN";
-            } else {
-                body.setAttribute('lang', 'en'); btnText.innerText = "BN";
-            }
-        }
+        const firebaseConfig = { apiKey: "AIzaSyCL8XMXMrKVZm-W-V92z0FMuiZqBP6W_cU", authDomain: "childcarehs-32f0e.firebaseapp.com", databaseURL: "https://childcarehs-32f0e-default-rtdb.asia-southeast1.firebasedatabase.app", projectId: "childcarehs-32f0e", storageBucket: "childcarehs-32f0e.appspot.com", messagingSenderId: "141971192886", appId: "1:141971192886:web:70db4fd887bd9b02ebac97" };
+        firebase.initializeApp(firebaseConfig); const db = firebase.database();
 
-        function checkGroup() {
-            const cls = document.getElementById('targetClass').value;
-            const groupDiv = document.getElementById('groupDiv');
-            if(cls === "Nine" || cls === "Ten") {
-                groupDiv.classList.remove('hidden');
-            } else {
-                groupDiv.classList.add('hidden');
-            }
-        }
+        function submitAdmission() {
+            const name = document.getElementById('admName').value;
+            const phone = document.getElementById('admPhone').value;
+            const cls = document.getElementById('admClass').value;
+            if(!name || !phone) return alert("Please fill up Name and Phone!");
 
-        function submitForm() {
-            alert("Your admission application has been submitted successfully!");
-            window.location.href = "index.html";
+            db.ref('admissions').push({ name, phone, class: cls, date: new Date().toLocaleDateString() })
+            .then(() => { alert("Application Sent!"); window.location.href="index.html"; });
         }
+        function toggleLanguage() { const body = document.getElementById('mainBody'); const btn = document.getElementById('btnText'); if (body.getAttribute('lang') === 'en') { body.setAttribute('lang', 'bn'); btn.innerText = "EN"; } else { body.setAttribute('lang', 'en'); btn.innerText = "BN"; } }
     </script>
 </body>
 </html>
