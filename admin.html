@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Master Admin | Child Care High School</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Font & Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f8fafc; }
+        .tab-btn.active { background: #1e40af; color: white; box-shadow: 0 10px 15px -3px rgba(30, 64, 175, 0.3); }
+        .hidden { display: none; }
+        input, select, textarea { 
+            border: 2px solid #e2e8f0; border-radius: 12px; padding: 12px; outline: none; width: 100%; transition: 0.3s;
+        }
+        input:focus, select:focus { border-color: #1e40af; background: #fff; }
+        .sidebar-item:hover:not(.active) { background-color: #f1f5f9; transform: translateX(5px); }
+        /* Table Style */
+        .manage-table th { @apply p-4 text-left text-xs font-bold uppercase text-slate-400 border-b bg-slate-50; }
+        .manage-table td { @apply p-4 text-sm border-b; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col lg:flex-row overflow-x-hidden">
+
+    <!-- SIDEBAR -->
+    <aside class="w-full lg:w-72 bg-white shadow-2xl flex flex-col p-6 z-50">
+        <div class="mb-10 text-center">
+            <h1 class="text-2xl font-black text-blue-900 italic uppercase">MASTER <span class="text-red-600">ADMIN</span></h1>
+            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Control Room</p>
+        </div>
+        
+        <nav class="space-y-2 flex-1 overflow-y-auto">
+            <button onclick="openTab(event, 'studentTab')" class="tab-btn active w-full flex items-center p-4 rounded-2xl font-bold transition-all text-slate-600 sidebar-item">
+                <i class="fas fa-users-cog mr-4 text-blue-600"></i> Manage Users
+            </button>
+            <button onclick="openTab(event, 'resTab')" class="tab-btn w-full flex items-center p-4 rounded-2xl font-bold transition-all text-slate-600 sidebar-item">
+                <i class="fas fa-file-excel mr-4 text-green-600"></i> Result Center
+            </button>
+            <button onclick="openTab(event, 'payTab')" class="tab-btn w-full flex items-center p-4 rounded-2xl font-bold transition-all text-slate-600 sidebar-item">
+                <i class="fas fa-money-check-alt mr-4 text-indigo-600"></i> Fees/Payment
+            </button>
+            <button onclick="openTab(event, 'notTab')" class="tab-btn w-full flex items-center p-4 rounded-2xl font-bold transition-all text-slate-600 sidebar-item">
+                <i class="fas fa-bullhorn mr-4 text-orange-500"></i> Notice Board
+            </button>
+            <button onclick="openTab(event, 'diaTab')" class="tab-btn w-full flex items-center p-4 rounded-2xl font-bold transition-all text-slate-600 sidebar-item">
+                <i class="fas fa-book mr-4 text-sky-500"></i> Class Diary
+            </button>
+            <button onclick="openTab(event, 'settingsTab')" class="tab-btn w-full flex items-center p-4 rounded-2xl font-bold transition-all text-slate-600 sidebar-item">
+                <i class="fas fa-cog mr-4 text-slate-700"></i> Admin Settings
+            </button>
+        </nav>
+
+        <div class="mt-10 border-t pt-6 text-center">
+            <a href="index.html" class="flex items-center justify-center text-red-500 font-black text-sm uppercase hover:underline">
+                <i class="fas fa-power-off mr-2"></i> Exit Admin
+            </a>
+        </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-1 p-4 lg:p-10 overflow-y-auto lg:h-screen">
+        
+        <!-- 1. MANAGE USERS -->
+        <div id="studentTab" class="tab-content animate-fade">
+            <div class="bg-white p-8 rounded-[40px] shadow-xl border-t-8 border-blue-600 mb-10">
+                <h2 class="text-2xl font-black text-slate-800 mb-6 uppercase italic">Create Student Account</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <input id="stdName" type="text" placeholder="Full Name">
+                    <input id="stdID" type="text" placeholder="Student ID">
+                    <input id="stdPass" type="password" placeholder="Set Password">
+                    <select id="stdClass">
+                        <option value="">Choose Class...</option>
+                        <script>
+                            const classes = ["Play", "Nursery", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten"];
+                            classes.forEach(c => document.write(`<option value="${c}">${c}</option>`));
+                        </script>
+                    </select>
+                </div>
+                <button onclick="saveStudent()" class="mt-6 w-full bg-blue-800 text-white font-black py-4 rounded-2xl shadow-lg hover:bg-black transition uppercase">Save Account</button>
+            </div>
+
+            <div class="bg-white p-8 rounded-[40px] shadow-xl">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-xl font-black text-slate-700 uppercase italic">User Database</h3>
+                    <select id="filterClass" onchange="loadUserTable()" class="w-48">
+                        <option value="All">All Classes</option>
+                        <script>classes.forEach(c => document.write(`<option value="${c}">${c}</option>`));</script>
+                    </select>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full manage-table">
+                        <thead><tr><th>Name</th><th>User ID</th><th>Password</th><th>Class</th><th>Actions</th></tr></thead>
+                        <tbody id="userTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. RESULT CENTER -->
+        <div id="resTab" class="tab-content hidden">
+            <div class="bg-white p-8 rounded-[40px] shadow-xl border-t-8 border-green-600">
+                <h2 class="text-2xl font-black text-slate-800 mb-6 uppercase italic">Result Management</h2>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div class="p-6 bg-slate-50 rounded-3xl border-2 border-dashed">
+                        <h3 class="font-bold text-blue-800 mb-4">Link Google Sheet</h3>
+                        <select id="sheetClass" class="mb-4">
+                            <option value="">Select Class...</option>
+                            <script>classes.forEach(c => document.write(`<option value="${c}">${c}</option>`));</script>
+                        </select>
+                        <input id="sheetUrl" type="text" placeholder="Google Sheet URL" class="mb-4">
+                        <button onclick="saveSheetLink()" class="w-full bg-blue-900 text-white font-bold py-3 rounded-xl">Save Connection</button>
+                    </div>
+                    <div class="p-6 bg-green-50 rounded-3xl border-2 border-dashed">
+                        <h3 class="font-bold text-green-800 mb-4 uppercase text-sm">Upload CSV</h3>
+                        <input type="file" id="csvFile" accept=".csv" class="mb-4">
+                        <button onclick="processCSV()" class="w-full bg-green-700 text-white font-bold py-3 rounded-xl shadow-lg">Upload Results</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. PAYMENT CENTER -->
+        <div id="payTab" class="tab-content hidden">
+            <div class="bg-white p-8 rounded-[40px] shadow-xl border-t-8 border-indigo-600">
+                <h2 class="text-2xl font-black text-slate-800 mb-6 uppercase italic">Payment Records</h2>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div class="bg-indigo-50 p-6 rounded-3xl">
+                        <input id="payID" type="text" placeholder="Student ID" class="mb-4">
+                        <select id="payMonth" class="mb-4">
+                            <option>January</option><option>February</option><option>March</option><option selected>April</option>
+                        </select>
+                        <select id="payStatus" class="mb-4 font-bold text-indigo-700"><option value="Paid">PAID</option><option value="Unpaid">UNPAID</option></select>
+                        <button onclick="updatePayment()" class="w-full bg-indigo-700 text-white font-black py-3 rounded-xl">Update Status</button>
+                    </div>
+                    <div class="bg-slate-50 p-6 rounded-3xl">
+                        <select id="reportClass" class="mb-4"><option value="">Class Report</option><script>classes.forEach(c => document.write(`<option value="${c}">${c}</option>`));</script></select>
+                        <button onclick="loadPaymentReport()" class="w-full bg-slate-800 text-white font-bold py-3 rounded-xl mb-4 italic">View Report</button>
+                        <div id="reportBox" class="bg-white p-4 rounded-xl border max-h-60 overflow-y-auto text-xs"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. NOTICE BOARD -->
+        <div id="notTab" class="tab-content hidden">
+            <div class="bg-white p-8 rounded-[40px] shadow-xl border-t-8 border-orange-500">
+                <h2 class="text-2xl font-black text-slate-800 mb-6 uppercase tracking-tighter">Post Notice</h2>
+                <input id="notTitle" type="text" placeholder="Title" class="mb-4 font-bold">
+                <textarea id="notDesc" placeholder="Description" class="mb-4 h-32"></textarea>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <input id="notLink" type="text" placeholder="Link (URL)">
+                    <input id="notFile" type="file" accept="image/*,.pdf" class="bg-slate-50">
+                </div>
+                <button onclick="saveNotice()" class="w-full bg-orange-600 text-white py-4 rounded-2xl font-black text-lg">PUBLISH</button>
+            </div>
+            <div class="bg-white p-8 rounded-[40px] shadow-xl mt-10">
+                <h3 class="text-xl font-black text-slate-700 uppercase mb-6 italic">History</h3>
+                <div id="noticeHistory" class="space-y-4"></div>
+            </div>
+        </div>
+
+        <!-- 5. CLASS DIARY -->
+        <div id="diaTab" class="tab-content hidden">
+            <div class="bg-white p-8 rounded-[40px] shadow-xl border-t-8 border-sky-500">
+                <h2 class="text-2xl font-black text-slate-800 mb-6 uppercase italic">Daily Diary Update</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                    <select id="diaryCls" onchange="autoSubjects(); loadDiaryHistory();" class="font-bold">
+                        <option value="">-- Class --</option>
+                        <script>classes.forEach(c => document.write(`<option value="${c}">${c}</option>`));</script>
+                    </select>
+                    <select id="diarySub" class="font-bold"><option value="">-- Subject --</option></select>
+                    <input id="diaryDate" type="date" class="font-bold">
+                </div>
+                <textarea id="diaryTask" placeholder="Homework Details..." class="h-40 mb-6"></textarea>
+                <button onclick="saveDiary()" class="w-full bg-sky-600 text-white py-4 rounded-2xl font-black text-lg shadow-lg uppercase">Post Diary</button>
+            </div>
+            <div class="bg-white p-8 rounded-[40px] shadow-xl mt-10">
+                <h3 class="text-xl font-black text-slate-700 mb-6 uppercase italic">Diary History</h3>
+                <div id="diaryHistory" class="space-y-4"></div>
+            </div>
+        </div>
+
+        <!-- 6. SETTINGS -->
+        <div id="settingsTab" class="tab-content hidden">
+            <div class="bg-white p-10 rounded-[40px] shadow-2xl border-t-8 border-slate-900 max-w-lg mx-auto">
+                <h2 class="text-2xl font-black text-slate-800 uppercase mb-8 text-center italic">Admin Password</h2>
+                <input id="oldAdminPass" type="password" placeholder="Current Password" class="mb-4">
+                <input id="newAdminPass" type="password" placeholder="New Password" class="mb-6">
+                <button onclick="changeAdminPass()" class="w-full bg-slate-900 text-white font-black py-4 rounded-2xl shadow-xl uppercase">Update Access</button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Data Keys
+        const DB_STD = "students"; const DB_NOT = "notices"; const DB_DIA = "diaries"; const DB_RES = "results"; const DB_PAY = "payments";
+
+        const subjectData = {
+            "Play": ["Bangla", "English", "Math", "Drawing"], "Nursery": ["Bangla", "English", "Math", "Religion", "Drawing"],
+            "One": ["Bangla", "English", "Math", "Science", "Bangladesh & Global Studies", "Religion"],
+            "Five": ["Bangla 1st", "Bangla 2nd", "English 1st", "English 2nd", "Math", "Science", "BGS", "Religion"],
+            "Six": ["Bangla 1st", "Bangla 2nd", "English 1st", "English 2nd", "Math", "Science", "BGS", "Digital Tech", "Religion"],
+            "Ten": ["Bangla 1st", "Bangla 2nd", "English 1st", "English 2nd", "Mathematics", "Religion", "ICT", "BGS", "-- SCIENCE --", "Physics", "Chemistry", "Biology", "-- COMMERCE --", "Accounting", "Business Ent.", "-- ARTS --", "Geography", "Economics"]
+        };
+
+        function openTab(evt, tabId) {
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(tabId).classList.remove('hidden');
+            evt.currentTarget.classList.add('active');
+            if(tabId === 'studentTab') loadUserTable();
+            if(tabId === 'notTab') loadNoticeHistory();
+            if(tabId === 'diaTab') loadDiaryHistory();
+        }
+
+        // Student Logics
+        function saveStudent() {
+            let students = JSON.parse(localStorage.getItem(DB_STD)) || [];
+            const name = document.getElementById('stdName').value, id = document.getElementById('stdID').value.trim(), pass = document.getElementById('stdPass').value, cls = document.getElementById('stdClass').value;
+            if(!name || !id || !pass || !cls) return alert("All fields are required!");
+            if(students.find(s => s.id === id)) return alert("ID exists!");
+            students.push({ name, id, password: pass, class: cls });
+            localStorage.setItem(DB_STD, JSON.stringify(students));
+            alert("Account Saved!"); loadUserTable();
+        }
+
+        function loadUserTable() {
+            let students = JSON.parse(localStorage.getItem(DB_STD)) || [];
+            const filter = document.getElementById('filterClass').value;
+            const body = document.getElementById('userTableBody');
+            body.innerHTML = "";
+            students.filter(s => filter === "All" || s.class === filter).forEach(s => {
+                body.innerHTML += `<tr><td>${s.name}</td><td><b>${s.id}</b></td><td>${s.password}</td><td>${s.class}</td><td><button onclick="editUser('${s.id}')" class="text-blue-500 mr-4"><i class="fas fa-edit"></i></button><button onclick="deleteUser('${s.id}')" class="text-red-500"><i class="fas fa-trash"></i></button></td></tr>`;
+            });
+        }
+
+        function deleteUser(id) {
+            if(!confirm("Delete this student?")) return;
+            let students = JSON.parse(localStorage.getItem(DB_STD)) || [];
+            localStorage.setItem(DB_STD, JSON.stringify(students.filter(s => s.id !== id)));
+            loadUserTable();
+        }
+
+        function editUser(id) {
+            let students = JSON.parse(localStorage.getItem(DB_STD)) || [];
+            let s = students.find(x => x.id === id);
+            let nName = prompt("Edit Name:", s.name), nPass = prompt("Edit Password:", s.password);
+            if(nName && nPass) { s.name = nName; s.password = nPass; localStorage.setItem(DB_STD, JSON.stringify(students)); loadUserTable(); }
+        }
+
+        // Notice Logics (FIXED DELETE)
+        async function saveNotice() {
+            let notices = JSON.parse(localStorage.getItem(DB_NOT)) || [];
+            const fileInput = document.getElementById('notFile');
+            let fileData = "";
+            if(fileInput.files[0]) fileData = await toBase64(fileInput.files[0]);
+            notices.unshift({ id: Date.now(), title: document.getElementById('notTitle').value, desc: document.getElementById('notDesc').value, link: document.getElementById('notLink').value, file: fileData, date: new Date().toLocaleDateString() });
+            localStorage.setItem(DB_NOT, JSON.stringify(notices)); alert("Notice Published!"); loadNoticeHistory();
+        }
+
+        function loadNoticeHistory() {
+            let notices = JSON.parse(localStorage.getItem(DB_NOT)) || [];
+            const box = document.getElementById('noticeHistory');
+            box.innerHTML = notices.map(n => `
+                <div class="p-4 bg-slate-50 border rounded-2xl flex justify-between items-center shadow-sm">
+                    <div><b class="text-blue-900">${n.title}</b> <small class="text-slate-400 ml-2">${n.date}</small></div>
+                    <button onclick="deleteNotice(${n.id})" class="text-red-500 hover:scale-110 transition"><i class="fas fa-trash"></i></button>
+                </div>
+            `).join('');
+        }
+
+        function deleteNotice(id) {
+            if(!confirm("Delete this notice?")) return;
+            let notices = JSON.parse(localStorage.getItem(DB_NOT)) || [];
+            // ID comparison using loose equality to avoid type issues
+            let updated = notices.filter(n => n.id != id);
+            localStorage.setItem(DB_NOT, JSON.stringify(updated));
+            loadNoticeHistory();
+        }
+
+        // Diary Logics (FIXED DELETE)
+        function autoSubjects() {
+            const cls = document.getElementById('diaryCls').value;
+            const subMenu = document.getElementById('diarySub');
+            subMenu.innerHTML = '<option value="">Select Subject</option>';
+            let list = subjectData[cls] || subjectData["One"];
+            list.forEach(s => { let opt = document.createElement('option'); opt.value = s; opt.innerText = s; if(s.startsWith("--")) opt.disabled = true; subMenu.appendChild(opt); });
+        }
+
+        function saveDiary() {
+            let diaries = JSON.parse(localStorage.getItem(DB_DIA)) || {};
+            const cls = document.getElementById('diaryCls').value;
+            if(!cls) return alert("Select Class!");
+            if(!diaries[cls]) diaries[cls] = [];
+            diaries[cls].unshift({ id: Date.now(), sub: document.getElementById('diarySub').value, task: document.getElementById('diaryTask').value, date: document.getElementById('diaryDate').value || new Date().toLocaleDateString() });
+            localStorage.setItem(DB_DIA, JSON.stringify(diaries)); alert("Diary Posted!"); loadDiaryHistory();
+        }
+
+        function loadDiaryHistory() {
+            const cls = document.getElementById('diaryCls').value;
+            const box = document.getElementById('diaryHistory');
+            if(!cls) { box.innerHTML = ""; return; }
+            let diaries = JSON.parse(localStorage.getItem(DB_DIA)) || {};
+            let list = diaries[cls] || [];
+            box.innerHTML = list.map(d => `
+                <div class="p-4 bg-slate-50 border rounded-2xl flex justify-between shadow-sm">
+                    <div><b>${d.sub}</b> - ${d.date} <p class="text-xs text-slate-500">${d.task}</p></div>
+                    <button onclick="deleteDiary('${cls}', ${d.id})" class="text-red-500"><i class="fas fa-trash"></i></button>
+                </div>
+            `).join('');
+        }
+
+        function deleteDiary(cls, id) {
+            if(!confirm("Delete this diary record?")) return;
+            let diaries = JSON.parse(localStorage.getItem(DB_DIA)) || {};
+            if(diaries[cls]) {
+                diaries[cls] = diaries[cls].filter(d => d.id != id);
+                localStorage.setItem(DB_DIA, JSON.stringify(diaries));
+                loadDiaryHistory();
+            }
+        }
+
+        // Admin Pass
+        function changeAdminPass() {
+            let saved = localStorage.getItem('adminPass') || 'Yeasin87*#@';
+            if(document.getElementById('oldAdminPass').value !== saved) return alert("Current password wrong!");
+            localStorage.setItem('adminPass', document.getElementById('newAdminPass').value);
+            alert("Updated!");
+        }
+
+        // Helpers
+        const toBase64 = file => new Promise((resolve) => {
+            const r = new FileReader(); r.readAsDataURL(file);
+            r.onload = () => resolve(r.result);
+        });
+
+        // Other methods (Payment, Result)
+        function saveSheetLink() { let s = JSON.parse(localStorage.getItem('class_sheets')) || {}; s[document.getElementById('sheetClass').value] = document.getElementById('sheetUrl').value; localStorage.setItem('class_sheets', JSON.stringify(s)); alert("Saved!"); }
+        function processCSV() { const f = document.getElementById('csvFile').files[0]; if(!f) return; const r = new FileReader(); r.onload = (e) => { let res = JSON.parse(localStorage.getItem('results')) || {}; e.target.result.split('\n').forEach(l => { const c = l.split(','); if(c.length >= 2) res[c[0].trim()] = { gpa: c[1].trim(), date: new Date().toLocaleDateString() }; }); localStorage.setItem('results', JSON.stringify(res)); alert("Bulk Done!"); }; r.readAsText(f); }
+        function updatePayment() { let p = JSON.parse(localStorage.getItem('payments')) || {}; const sid = document.getElementById('payID').value.trim(); if(!sid) return; if(!p[sid]) p[sid] = {}; p[sid][document.getElementById('payMonth').value] = document.getElementById('payStatus').value; localStorage.setItem('payments', JSON.stringify(p)); alert("Updated!"); }
+        function loadPaymentReport() { const cls = document.getElementById('reportClass').value; const box = document.getElementById('reportBox'); if(!cls) return; let stds = (JSON.parse(localStorage.getItem('students')) || []).filter(s => s.class === cls); let pays = JSON.parse(localStorage.getItem('payments')) || {}; let h = `<table class="w-full"><tr><th class="border p-1">ID</th><th>Name</th><th>Status</th></tr>`; stds.forEach(s => { let st = (pays[s.id] && pays[s.id]['April']) ? pays[s.id]['April'] : "Unpaid"; h += `<tr><td class="border p-1 font-mono">${s.id}</td><td>${s.name}</td><td class="${st==='Paid'?'text-green-600':'text-red-500'} font-bold">${st}</td></tr>`; }); box.innerHTML = h + `</table>`; }
+
+        window.onload = () => {
+            if(sessionStorage.getItem('adminLoggedIn') !== 'true') window.location.href = 'login.html';
+            document.getElementById('diaryDate').valueAsDate = new Date();
+            loadUserTable();
+        };
+    </script>
+</body>
+</html>

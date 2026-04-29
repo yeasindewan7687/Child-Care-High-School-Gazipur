@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"><title>Results | Child Care HS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-100 font-sans">
+    <nav class="bg-white shadow p-4 flex justify-between items-center px-10">
+        <a href="index.html" class="font-black text-blue-900 uppercase">CHILD CARE HS</a>
+        <a href="index.html" class="font-bold underline">HOME</a>
+    </nav>
+
+    <div class="container mx-auto py-12 px-6">
+        <h1 class="text-center text-4xl font-black text-blue-900 uppercase italic mb-12 tracking-tighter">Academic Results</h1>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-5xl mx-auto">
+            <!-- Individual ID Search -->
+            <div class="bg-white p-10 rounded-[40px] shadow-2xl border-b-8 border-blue-800">
+                <h3 class="text-xl font-black mb-6 italic uppercase text-slate-700">Individual Search</h3>
+                <input id="searchID" type="text" placeholder="Enter Your Student ID" class="w-full border-2 p-4 rounded-2xl mb-4 outline-none focus:border-blue-800">
+                <button onclick="findResult()" class="w-full bg-blue-800 text-white font-black py-4 rounded-2xl shadow-xl hover:bg-black transition">VIEW RESULT</button>
+                <div id="output" class="mt-8"></div>
+            </div>
+
+            <!-- Full Class Google Sheet -->
+            <div class="bg-white p-10 rounded-[40px] shadow-2xl border-b-8 border-green-600">
+                <h3 class="text-xl font-black mb-6 italic uppercase text-slate-700">Full Class Sheet</h3>
+                <select id="clsSheet" class="w-full border-2 p-4 rounded-2xl mb-4 bg-slate-50 font-bold">
+                    <option value="">-- Choose Class --</option>
+                    <script>
+                        const clsList = ["Play", "Nursery", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten"];
+                        clsList.forEach(c => document.write(`<option value="${c}">${c}</option>`));
+                    </script>
+                </select>
+                <button onclick="openGoogleSheet()" class="w-full bg-green-600 text-white font-black py-4 rounded-2xl shadow-xl hover:bg-green-800 transition italic">OPEN GOOGLE SHEET</button>
+                <p class="text-[10px] text-slate-400 mt-4 text-center font-bold">Official Admin-shared Result Sheets</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function findResult() {
+            const id = document.getElementById('searchID').value.trim();
+            let results = JSON.parse(localStorage.getItem('results')) || {};
+            const res = results[id];
+            const output = document.getElementById('output');
+            if(res) {
+                output.innerHTML = `
+                    <div class="p-6 bg-blue-50 rounded-3xl border-2 border-blue-100 text-center animate-pop">
+                        <p class="text-slate-400 font-bold uppercase text-[10px] tracking-widest">Student Score</p>
+                        <h4 class="text-5xl font-black text-blue-900 mt-2">GPA: ${res.gpa}</h4>
+                        <p class="mt-4 font-bold italic text-slate-500">Updated: ${res.date}</p>
+                    </div>`;
+            } else {
+                output.innerHTML = "<p class='text-red-500 font-bold text-center italic animate-bounce'>ID not found or Result not uploaded!</p>";
+            }
+        }
+
+        function openGoogleSheet() {
+            const cls = document.getElementById('clsSheet').value;
+            let sheets = JSON.parse(localStorage.getItem('class_sheets')) || {};
+            if(sheets[cls]) { window.open(sheets[cls], '_blank'); }
+            else { alert("Admin hasn't linked a sheet for this class yet!"); }
+        }
+    </script>
+</body>
+</html>

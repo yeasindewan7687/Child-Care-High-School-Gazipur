@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"><title>Digital Diary | Child Care HS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-50 font-sans">
+    <nav class="bg-white shadow p-4 flex justify-between items-center px-6 lg:px-12">
+        <a href="index.html" class="font-black text-blue-900 italic">CHILD CARE HS</a>
+        <a href="index.html" class="font-bold text-blue-700 underline">HOME</a>
+    </nav>
+
+    <section class="bg-green-600 py-16 text-center text-white">
+        <h1 class="text-3xl lg:text-5xl font-black uppercase tracking-tighter italic">Daily Class Diary</h1>
+        <p class="mt-2 text-green-100 font-bold italic">ঘরে বসেই জেনে নিন আজকের পড়া</p>
+    </section>
+
+    <div class="container mx-auto px-6 -mt-10">
+        <div class="max-w-2xl mx-auto bg-white p-8 rounded-[40px] shadow-2xl border-t-8 border-green-800">
+            <label class="block font-black text-slate-500 uppercase text-xs mb-2">Select Your Class:</label>
+            <select id="diaryCls" onchange="loadDiaryData()" class="w-full border-2 p-4 rounded-2xl font-bold bg-slate-50 focus:border-green-600 outline-none">
+                <option value="">-- Choose Class --</option>
+                <option>Play</option><option>Nursery</option>
+                <option>One</option><option>Two</option><option>Three</option><option>Four</option><option>Five</option>
+                <option>Six</option><option>Seven</option><option>Eight</option><option>Nine</option><option>Ten</option>
+            </select>
+        </div>
+    </div>
+
+    <section id="diaryContent" class="container mx-auto py-12 px-6 hidden">
+        <div id="diaryItems" class="max-w-4xl mx-auto grid grid-cols-1 gap-6">
+            <!-- ডায়েরি আইটেম এখানে লোড হবে -->
+        </div>
+    </section>
+
+    <script>
+        function loadDiaryData() {
+            const cls = document.getElementById('diaryCls').value;
+            const items = document.getElementById('diaryItems');
+            const contentSec = document.getElementById('diaryContent');
+            if(!cls) return;
+
+            let diaries = JSON.parse(localStorage.getItem('diaries')) || {};
+            let myDiary = diaries[cls] || [];
+            
+            contentSec.classList.remove('hidden');
+            if(myDiary.length === 0) {
+                items.innerHTML = "<p class='text-center text-slate-400 italic py-10'>No diary posted for this class yet.</p>";
+            } else {
+                items.innerHTML = myDiary.map(d => `
+                    <div class="bg-white p-8 rounded-3xl shadow-xl border-l-8 border-blue-800 transition hover:scale-[1.02]">
+                        <h4 class="text-xl font-black text-blue-900 border-b pb-2 mb-4 italic">${d.sub}</h4>
+                        <p class="text-slate-700 text-lg font-medium leading-relaxed italic">"${d.task}"</p>
+                        <p class="text-[10px] font-black text-slate-300 mt-6 uppercase tracking-[3px]">Published Date: ${d.date}</p>
+                    </div>
+                `).join('');
+            }
+        }
+    </script>
+</body>
+</html>

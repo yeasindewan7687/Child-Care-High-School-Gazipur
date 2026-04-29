@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notice Board | Child Care HS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body[lang="bn"] .lang-en { display: none !important; }
+        body[lang="bn"] .lang-bn { display: inline-block !important; }
+        body[lang="en"] .lang-bn { display: none !important; }
+        body[lang="en"] .lang-en { display: inline-block !important; }
+    </style>
+</head>
+<body class="bg-slate-50 font-sans" lang="en" id="mainBody">
+    <nav class="bg-white shadow p-4 flex justify-between items-center px-10">
+        <div class="text-xl font-black text-blue-900 uppercase">CHILD CARE <span class="text-red-600">HS</span></div>
+        <div class="flex gap-4">
+            <button onclick="toggleLanguage()" class="bg-slate-100 px-3 py-1 rounded-full border text-xs font-bold">BN/EN</button>
+            <a href="index.html" class="font-bold text-blue-800 underline">HOME</a>
+        </div>
+    </nav>
+
+    <header class="bg-blue-900 py-16 text-center text-white">
+        <h1 class="text-4xl font-black uppercase italic tracking-tighter">
+            <span class="lang-en">Official Notice Board</span><span class="lang-bn">অফিসিয়াল নোটিশ বোর্ড</span>
+        </h1>
+    </header>
+
+    <section class="container mx-auto py-12 px-6">
+        <div id="fullNoticeList" class="max-w-4xl mx-auto space-y-8">
+            <!-- নোটিশ এখানে অটোমেটিক লোড হবে -->
+        </div>
+    </section>
+
+    <script>
+        function toggleLanguage() {
+            const b = document.getElementById('mainBody');
+            b.getAttribute('lang') === 'en' ? b.setAttribute('lang', 'bn') : b.setAttribute('lang', 'en');
+        }
+
+        window.onload = function() {
+            let notices = JSON.parse(localStorage.getItem('notices')) || [];
+            const list = document.getElementById('fullNoticeList');
+            if(notices.length === 0) {
+                list.innerHTML = "<p class='text-center text-slate-400 italic'>No notices published yet.</p>";
+            } else {
+                list.innerHTML = notices.map(n => `
+                    <div class="bg-white p-8 rounded-3xl shadow-xl border-l-8 border-orange-500 animate-fade-in">
+                        <p class="text-xs font-bold text-slate-400 mb-2 uppercase tracking-widest">${n.date}</p>
+                        <h2 class="text-2xl font-black text-blue-900">${n.title}</h2>
+                        <p class="text-slate-700 mt-4 leading-relaxed italic">${n.desc}</p>
+                        ${n.link ? `
+                            <div class="mt-6 p-4 bg-slate-50 rounded-2xl flex items-center justify-between">
+                                <span class="text-sm font-bold text-slate-500 italic"><i class="fas fa-paperclip mr-2"></i> Document Attached</span>
+                                <a href="${n.link}" target="_blank" class="bg-orange-600 text-white px-6 py-2 rounded-xl font-bold shadow-lg hover:bg-orange-700 transition">VIEW MEDIA</a>
+                            </div>
+                        ` : ''}
+                    </div>
+                `).join('');
+            }
+        };
+    </script>
+</body>
+</html>
